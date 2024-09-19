@@ -1,0 +1,15 @@
+services:
+  web:
+    build: .
+    container_name: cardapp-web
+    restart: unless-stopped
+    ports:
+      - "0:5000"
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    environment:
+      FLASK_ENV: development  # Sets the Flask environment to development
+      FLASK_APP: app.py       # Tells Flask which file to run
+    command: flask run --host=0.0.0.0
