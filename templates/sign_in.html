@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign in</title>
+
+    <style>
+      h2 {
+        margin-left: 38%;
+        margin-top: 10%;
+      }
+
+      .input-container {
+        display: inline-block;
+        width: 300px;
+        border: 1px solid gray;
+        border-radius: 5px;
+        overflow: hidden;
+        margin-left: 38%;
+        margin-top: 5px;
+      }
+
+      input {
+        width: 100%;
+        padding: 15px;
+        border: none;
+        outline: none;
+        box-sizing: border-box;
+        font-size: 16px;
+      }
+
+      input.username {
+        border-bottom: 1px solid gray;
+      }
+
+      .remember-container {
+        display: flex;
+        align-items: center;
+        margin-left: 28%;
+        margin-top: 10px;
+        width: 300px;
+      }
+
+      .remember-container input {
+        margin-right: -45%;
+      }
+
+      .button {
+        background-color: rgb(33, 113, 226);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        padding: 14px 127px;
+        margin-left: 38%;
+        margin-top: 2%;
+        font-size: medium;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <h2>Please sign in</h2>
+      <div class="input-container">
+        <input type="email" class="username" placeholder="Username/Email">
+        <input type="password" class="password" placeholder="Password">
+      </div>
+      <div class="remember-container">
+        <input type="checkbox" id="rememberMe">
+        <label for="rememberMe">Remember me</label>
+      </div>
+      <button class="button" type="submit">Sign in</button>
+    </form>
+  </body>
+</html>
