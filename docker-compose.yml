@@ -1,15 +1,28 @@
 services:
-  web:
+  flask-app:
     build: .
-    container_name: cardapp-web
+    container_name: flask-app
     restart: unless-stopped
     ports:
-      - "0:5000"
+      - "8000:8000"
     volumes:
       - .:/app
+    depends_on:
+      - langserve
     env_file:
       - .env
     environment:
       FLASK_ENV: development  # Sets the Flask environment to development
       FLASK_APP: app.py       # Tells Flask which file to run
     command: flask run --host=0.0.0.0
+
+  langserve:
+    build: ./langserve
+    container_name: langserve
+    restart: unless-stopped
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./langserve:/app
+    env_file:
+      - .env
