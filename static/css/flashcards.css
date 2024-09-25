@@ -1,0 +1,129 @@
+.flashcard {
+    width: 100%;
+    max-width: 500px;
+    height: 350px;
+    perspective: 1000px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    margin: 0 auto;
+}
+
+.flashcard:hover {
+    transform: scale(1.05);
+}
+
+.flashcardInner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.flashcard.flipped .flashcardInner {
+    transform: rotateY(180deg);
+}
+
+.flashcardFront, .flashcardBack {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 1.2em;
+    padding: 20px;
+}
+
+.flashcardBack {
+    transform: rotateY(180deg);
+}
+
+.flashcard-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 500px; 
+    padding-top: 40px;
+}
+
+.menu-container {
+    margin-top: 80px;
+    margin-bottom: 20px;
+}
+
+.title-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-left: 15px;
+}
+
+.title-container h1 {
+    font-size: 1.5rem;
+    margin-left: 10px;
+    margin-bottom: 0;
+}
+
+.menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.menu-item .icon {
+    margin-left: 10px;
+}
+
+.menu-item.active {
+    font-weight: bold;
+}
+
+#feedback {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+#summary {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    
+    .flashcard {
+        height: 250px;
+    }
+
+    .flashcard-container {
+        height: auto;
+        padding-bottom: 40px;
+    }
+
+    .menu-container {
+        margin-top: 20px;
+        margin-bottom: 85px;
+    }
+
+    .title-container {
+        margin-left: 0;
+    }
+
+    #feedback {
+        position: static; 
+        margin-top: 100px; 
+    }
+
+}
