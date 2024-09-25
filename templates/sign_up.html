@@ -4,69 +4,31 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sign up</title>
-
-    <style>
-      h2 {
-        margin-left: 38%;
-        margin-top: 10%;
-      }
-      .input-container {
-        display: inline-block;
-        width: 300px;
-        border: 1px solid gray;
-        border-radius: 5px;
-        overflow: hidden;
-        margin-left: 38%;
-        margin-top: 5px;
-      }
-      input {
-        width: 100%;
-        padding: 15px;
-        border: none;
-        outline: none;
-        box-sizing: border-box;
-        font-size: 16px;
-      }
-      input.username {
-        border-bottom: 1px solid gray;
-      }
-      input.email {
-        border-bottom: 1px solid gray;
-      }
-      .button {
-        background-color: rgb(33, 113, 226);
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        padding: 14px 127px;
-        margin-left: 38%;
-        margin-top: 2%;
-        font-size: medium;
-      }
-      hr {
-        width: 30%;
-      }
-      .link {
-        margin-left: 40%;
-        margin-top: 1%;
-      }
-    </style>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </head>
   <body>
-    <form>
-      <h2>Sign up</h2>
-      <div class="input-container">
-        <input type="text" class="username" placeholder="Username">
-        <input type="email" class="email" placeholder="Email">
-        <input type="password" class="password" placeholder="Password">
+    <div class="container mt-5">
+      <form class="mx-auto" style="max-width: 400px;">
+        <h2 class="text-center mb-4">Sign up</h2>
+        <div class="mb-3">
+          <input type="text" class="form-control" placeholder="Username" required>
+        </div>
+        <div class="mb-3">
+          <input type="email" class="form-control" placeholder="Email" required>
+        </div>
+        <div class="mb-3">
+          <input type="password" class="form-control" placeholder="Password" required>
+        </div>
+        <button class="btn btn-primary w-100" type="submit">Sign up</button>
+      </form>
+      <hr>
+      <div class="text-center mt-3">
+          Already have an account? <a href="sign_in.html">Sign in</a>
       </div>
-      <button class="button" type="submit">Sign up</button>
-    </form><br>
-    <hr>
-    <div class="link">
-        Already have an account? <a href="sign_in.html">Sign in</a>
     </div>
   </body>
 </html>
