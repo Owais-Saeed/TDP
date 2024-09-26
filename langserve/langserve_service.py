@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from langserve import add_routes
 # Generators
 from outline_generator import chain as outline_chain
-from card_generator import chain as card_chain
+from set_generator import chain as card_chain
 
 app = FastAPI(
     title="CardApp",
@@ -20,7 +20,7 @@ add_routes(
 add_routes(
     app,
     card_chain,
-    path="/new-card",
+    path="/new-set",
 )
 
 @app.get("/test")
