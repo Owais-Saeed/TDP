@@ -8,7 +8,7 @@ services:
     volumes:
       - .:/app
     depends_on:
-#      - langserve
+      - langserve
       - mongodb
     env_file:
       - .env
@@ -18,16 +18,16 @@ services:
       MONGO_URI: mongodb://mongodb:27017/mydatabase
     command: flask run --host=0.0.0.0
 
-#  langserve:
-#    build: ./langserve
-#    container_name: langserve
-#    restart: unless-stopped
-#    ports:
-#      - "8001:8001"
-#    volumes:
-#      - ./langserve:/app
-#    env_file:
-#      - .env
+  langserve:
+    build: ./langserve
+    container_name: langserve
+    restart: unless-stopped
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./langserve:/app
+    env_file:
+      - .env
 
   mongodb:
     image: mongo:latest

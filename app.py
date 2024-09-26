@@ -1,7 +1,4 @@
-from flask import Flask, render_template, jsonify
-from langchain.prompts import PromptTemplate
-import json
-
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
@@ -34,4 +31,4 @@ def get_deck(topic):
         return "Deck not found", 404
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=8000, debug=True)
