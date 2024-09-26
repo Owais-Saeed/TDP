@@ -4,16 +4,18 @@ services:
     container_name: flask-app
     restart: unless-stopped
     ports:
-      - "8000:8000"
+      - "8000:5000"
     volumes:
       - .:/app
     depends_on:
       - langserve
+      - mongodb
     env_file:
       - .env
     environment:
-      FLASK_ENV: development  # Sets the Flask environment to development
-      FLASK_APP: app.py       # Tells Flask which file to run
+      FLASK_ENV: development
+      FLASK_APP: app.py
+      MONGO_URI: mongodb://mongodb:27017/mydatabase
     command: flask run --host=0.0.0.0
 
   langserve:
@@ -26,3 +28,15 @@ services:
       - ./langserve:/app
     env_file:
       - .env
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db # Persistent data volume for MongoDB
+
+volumes:
+  mongodb_data:
