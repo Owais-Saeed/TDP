@@ -21,8 +21,8 @@ model = ChatGoogleGenerativeAI(
 class Card(BaseModel):
     difficulty: str = Field(description="beginner/intermediate/advanced")
     concept: str = Field(description="The concept the flashcard covers")
-    prompt: str = Field(description="The flashcard prompt")
-    response: str = Field(description="The flashcard response")
+    front: str = Field(description="The flashcard prompt")
+    back: str = Field(description="The flashcard response")
 class CardSet(BaseModel):
     set: List[Card] = Field(description="A collection of flashcards")
 
@@ -30,113 +30,99 @@ class CardSet(BaseModel):
 parser = JsonOutputParser(pydantic_object=CardSet)
 
 prompt = PromptTemplate(
-    template="""
-You will create a set of 8-10 high-quality educational flashcards for a {level} level. The course is about {topic}, and this unit is part of {unit}.
-    
-The flashcard set should specifically cover each of the following concepts:
+    template = r"""
+You will create a set of 8-10 high-quality **concise** educational flashcards for a {level} level student. The course topic is {topic}, and this set is part of {unit}. Flashcards must focus on **active recall** by framing the front of the card as a **question** and providing a clear, concise answer on the back.
+
+The flashcards should cover the following key concepts:
 {concepts}
-    
-Your flashcards will range between beginner, intermediate, and advanced levels, with the aim of testing the student's comprehensive knowledge of the topic.
-    
-### Rules for Creating High-Quality Flashcards
-    
-I. Content Rules
-    
-1. Focus on Key Concepts
 
-    - Prioritise the most critical information, including essential definitions, concepts, dates, formulas, and vocabulary.
+### Key Rules for Creating Flashcards that Encourage Active Recall
 
-    - Each flashcard should focus on one concept or question to avoid overloading information.
+#### I. Content Rules
 
-    - Ensure each flashcard uses concise language.
+1. **One Concept Per Card**
+    - Each flashcard must focus on a **single concept**. Do not include multiple related ideas on one card.
+    - If you need to explore more than one aspect of a concept (e.g., a formula and its application), create **separate flashcards** for each aspect.
 
-2. Ensure Clarity
+2. **Focus on Key Concepts**
+    - Prioritize essential information, like definitions, concepts, formulas, or important principles.
+    - Each card must have **one question** on the front, and the **concise answer** on the back.
 
-    - Write questions and answers clearly and concisely. Avoid ambiguous language.
+3. **Frame Questions to Require Active Recall**
+    - Use clear, direct questions that prompt the learner to retrieve one key piece of information or understanding per card.
+    - Avoid yes/no questions. Instead, ask for explanations, definitions, or formulas.
 
-    - Use straightforward language that is easy to understand but precise enough to convey the correct meaning.
+4. **Keep Answers Concise and Direct**
+    - Limit responses to **1-2 sentences** to ensure clarity and simplicity.
+    - Avoid over-explaining; focus on the key information necessary to answer the question.
 
-3. Accuracy is Critical
-
+5. **Accuracy is Critical**
     - Verify the accuracy of all facts, definitions, and explanations provided on the flashcards.
 
-II. Formatting Rules
+#### II. Formatting Rules
 
-1. Consistent Formatting
+1. **Consistent and Simple Formatting**
+    - Ensure that the formatting is clean and minimal, without unnecessary elaboration.
 
-    - Maintain a consistent format across all flashcards, with the question or prompt on one side and the answer on the other.
+2. **Markdown Formatting**
+    - Use **bold** markdown formatting to emphasize key terms.
+    - The only markdown-specific formatting you are allowed to use is **bold**, eg. do not create lists.
 
-2. Markdown Formatting
+3. **Clarity and Precision**
+    - Both the question and answer must be easily understandable at a glance.
+    - Avoid vague or overly complex wording.
 
-    - Use **bold** to emphasise key terms.
+4. **Code blocks**
+    - Use triple backticks (```) to create a fenced code block.
+    - Use single backticks (`) for inline code when referring to specific functions, variables, or code snippets within text.
 
-3. Code blocks
-
-    - Use triple backticks ``` to create a fenced code block.
-
-    - Use single backticks ` for inline code when referring to specific functions, variables, or code snippets within text.
-
-4. Mathematical and Scientific Notation
-
+5. **Mathematical and Scientific Notation**
     - Use LaTeX for **all** mathematical expressions, equations, and formulas.
-    
-    - Backslashes in LaTeX must be escaped as `\\\\` (double backslash). From here on you will see `\\` single backslashes, but you must use `\\\\` double backslashes in your response.
-
-    - For **standalone** equations, use display mode:
-    $$ equation $$
-    
+    - Backslashes in LaTeX must be escaped as `\\` (double backslash). You must use `\\` double backslashes in your response.
+    - For **standalone** equations, use display mode: $$ equation $$
     - For **inline** expressions, use inline mode: \\( equation \\)
-
     - For example, use `\\int` for integrals, `\\alpha` for the Greek letter alpha, and so on.
-
     - It is critical that you always use LaTeX where appropriate.
 
-III. Cognitive Engagement Rules
+#### III. Cognitive Engagement Rules
 
-1. Promote Active Recall
-
+1. **Promote Active Recall**
     - Frame the content in a question-and-answer format to encourage active recall.
-
     - Use prompts that require the learner to retrieve information rather than just recognize it.
 
-2. Include Varied Question Types
-
+2. **Include Varied Question Types**
     - Incorporate a mix of question types, including factual, conceptual, and application-based questions.
-
     - Ensure that some questions challenge the learner to explain “why” or “how” a concept works, promoting deeper understanding.
 
-3. Promote Engagement and Motivation
-
+3. **Promote Engagement and Motivation**
     - Create flashcards that are engaging and encourage repeated use, such as by using varied question formats and including interesting facts or examples.
-
     - Avoid monotonous repetition of similar questions; aim to keep the learner motivated and interested.
 
-### Example Flashcards with LaTeX Formatting:
+#### Example Flashcards:
 
-Flashcard 1
-- **Question**: What is the formula for the area of a circle?
-- **Answer**: $$ A = \\pi r^2 $$
+- **Front**: "What is the formula for the area of a circle?"
+- **Back**: "$$ A = \\pi r^2 $$"
 
-Flashcard 2
-- **Question**: How do you find the derivative of \\( f(x) = x^2 \\)?
-- **Answer**: $$ f'(x) = 2x $$
+- **Front**: "What is the goal when balancing a chemical equation?"
+- **Back**: "Equal atoms on both sides."
 
-Flashcard 3
-- **Question**: What is the formula for gravitational force between two masses?
-- **Answer**: $$ F = \\frac{G m_1 m_2}{r^2} $$
-
-### Use LaTeX for:
+#### Use LaTeX for:
 
 - Mathematical symbols
 - Scientific formulas
 - Any specialized symbols or notation
 
-### JSON Formatting Instructions
+---
+
+Ensure that each flashcard is clear, concise, and encourages active recall. Cover the following concepts: {concepts}.
+
+Ensure that each flashcard covers one concept at a time. If a topic requires explaining more than one concept, prefer creating multiple flashcards rather than combining them into one.
 
 {format_instructions}
 \n""",
-    input_variables=["level", "topic", "unit", "concepts"],
-    partial_variables={"format_instructions": parser.get_format_instructions()},
+    input_variables = ["level", "topic", "unit", "concepts"],
+    partial_variables = {"format_instructions": parser.get_format_instructions()},
 )
+
 
 chain = prompt | model | parser
