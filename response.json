@@ -1,0 +1,82 @@
+{
+	"topic": "Photosynthesis",
+	"level": "high-school",
+	"cards": [
+		{
+			"question": "What is the overall chemical equation for photosynthesis?",
+			"answer": "6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂"
+		},
+		{
+			"question": "What is the primary function of photosynthesis?",
+			"answer": "To convert light energy into chemical energy in the form of glucose."
+		},
+		{
+			"question": "What are the two main stages of photosynthesis?",
+			"answer": "Light-dependent reactions and light-independent reactions (Calvin cycle)."
+		},
+		{
+			"question": "Where do the light-dependent reactions take place?",
+			"answer": "In the thylakoid membranes of chloroplasts."
+		},
+		{
+			"question": "What is the role of chlorophyll in photosynthesis?",
+			"answer": "To absorb light energy, primarily in the red and blue wavelengths."
+		},
+		{
+			"question": "What are the products of the light-dependent reactions?",
+			"answer": "ATP (energy) and NADPH (reducing power)."
+		},
+		{
+			"question": "What is the role of ATP and NADPH in the Calvin cycle?",
+			"answer": "They provide the energy and reducing power needed to convert carbon dioxide into glucose."
+		},
+		{
+			"question": "Where does the Calvin cycle take place?",
+			"answer": "In the stroma of chloroplasts."
+		},
+		{
+			"question": "What is the primary reactant in the Calvin cycle?",
+			"answer": "Carbon dioxide (CO₂)."
+		},
+		{
+			"question": "What is the main product of the Calvin cycle?",
+			"answer": "Glucose (C₆H₁₂O₆)."
+		},
+		{
+			"question": "What are the factors that affect the rate of photosynthesis?",
+			"answer": "Light intensity, carbon dioxide concentration, temperature, and water availability."
+		},
+		{
+			"question": "How does light intensity affect the rate of photosynthesis?",
+			"answer": "As light intensity increases, the rate of photosynthesis increases until it reaches a plateau."
+		},
+		{
+			"question": "How does carbon dioxide concentration affect the rate of photosynthesis?",
+			"answer": "As carbon dioxide concentration increases, the rate of photosynthesis increases until it reaches a plateau."
+		},
+		{
+			"question": "How does temperature affect the rate of photosynthesis?",
+			"answer": "There is an optimal temperature for photosynthesis; rates decrease at very high or low temperatures."
+		},
+		{
+			"question": "How does water availability affect the rate of photosynthesis?",
+			"answer": "Water is essential for photosynthesis; a lack of water can significantly reduce the rate."
+		},
+		{
+			"question": "What are the by-products of photosynthesis?",
+			"answer": "Oxygen (O₂) and water (H₂O)."
+		},
+		{
+			"question": "What is the importance of photosynthesis to life on Earth?",
+			"answer": "It provides the primary source of energy for most living organisms and releases oxygen into the atmosphere."
+		},
+		{
+			"question": "What is the difference between light-dependent and light-independent reactions?",
+			"answer": "Light-dependent reactions require light energy, while light-independent reactions do not. Light-dependent reactions produce ATP and NADPH, which are used in the light-independent reactions."
+		},
+		{
+			"question": "What is the role of the electron transport chain in photosynthesis?",
+			"answer": "To move electrons from chlorophyll to other molecules, releasing energy that is used to produce ATP."
+		}
+	]
+}
