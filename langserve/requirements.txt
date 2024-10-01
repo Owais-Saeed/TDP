@@ -1,0 +1,10 @@
+# LangChain dependencies
+langchain-core~=0.3.5
+langchain-google-genai~=2.0.0
+langserve~=0.3.0
+fastapi~=0.115.0
+pydantic~=2.9.2
+sse_starlette
+
+# For environment variables
+python-dotenv~=1.0.1
