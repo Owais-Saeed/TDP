@@ -1,4 +1,0 @@
-# Flask dependencies
-Flask~=3.0.3
-requests
-python-dotenv
