@@ -12,14 +12,14 @@
   </head>
   <body>
     <div class="container mt-5">
-      <form class="mx-auto" style="max-width: 400px;">
+      <form class="mx-auto" style="max-width: 400px;" action="/signin" method="POST">
         <h2 class="text-center mb-4">Please sign in</h2>
         
         <div class="mb-3">
-          <input type="email" class="form-control" placeholder="Username/Email" required>
+          <input type="text" name="username" class="form-control" placeholder="Username" required>
         </div>
         <div class="mb-3">
-          <input type="password" class="form-control" placeholder="Password" required>
+          <input type="password" name="password" class="form-control" placeholder="Password" required>
         </div>
 
         <div class="form-check mb-3">
@@ -29,6 +29,7 @@
 
         <button type="submit" class="btn btn-primary w-100">Sign in</button>
       </form>
+      <p>Don't have an account? <a href="/signup">Sign up here</a></p>
     </div>
   </body>
 </html>

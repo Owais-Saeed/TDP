@@ -12,22 +12,22 @@
   </head>
   <body>
     <div class="container mt-5">
-      <form class="mx-auto" style="max-width: 400px;">
+      <form class="mx-auto" style="max-width: 400px;" action="/signup" method="POST">
         <h2 class="text-center mb-4">Sign up</h2>
         <div class="mb-3">
-          <input type="text" class="form-control" placeholder="Username" required>
+          <input type="text" name="username" class="form-control" placeholder="UsernameD" required>
         </div>
-        <div class="mb-3">
+        <!-- <div class="mb-3">
           <input type="email" class="form-control" placeholder="Email" required>
-        </div>
+        </div> -->
         <div class="mb-3">
-          <input type="password" class="form-control" placeholder="Password" required>
+          <input type="password" name="password" class="form-control" placeholder="Password" required>
         </div>
         <button class="btn btn-primary w-100" type="submit">Sign up</button>
       </form>
       <hr>
       <div class="text-center mt-3">
-          Already have an account? <a href="sign_in.html">Sign in</a>
+          Already have an account? <a href="signin.html">Sign in</a>
       </div>
     </div>
   </body>
