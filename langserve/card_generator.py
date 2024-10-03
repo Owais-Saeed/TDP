@@ -10,35 +10,7 @@ from pydantic import BaseModel, Field
 # Arrays
 from typing import Any, Dict, List
 
-# [ Request Example ]
-# Level: High-school
-# Topic: Photosynthesis
-# Unit: Introduction to Photosynthesis
-# Concept: The Photosynthesis Equation
-
-# create the model
-model = ChatGoogleGenerativeAI(
-    model="gemini-1.5-flash",
-    temperature=0.3,
-    max_tokens=5000,
-)
-
-# define the data structure using pydantic
-class Card(BaseModel):
-    difficulty: str = Field(description="beginner/intermediate/advanced")
-    front: str = Field(description="The flashcard prompt")
-    back: str = Field(description="The flashcard response")
-class Set(BaseModel):
-    set: List[Card] = Field(description="A collection of flashcards")
-
-# create the parsers
-str_parser = StrOutputParser()
-json_parser = JsonOutputParser(pydantic_object=Set)
-
-# ---- [ STEP 1 ] -- [ Create Flashcards ] ----
-
-flashcards_prompt = PromptTemplate(
-    template = r"""
+generation_instructions = r'''
 You will create a set of 8-10 high-quality **concise** educational flashcards for a {level} level student. The course topic is {topic}, and this set is part of {unit}. Flashcards must focus on **active recall** by framing the front of the card as a **question** and providing a clear, concise answer on the back.
 
 The flashcards will range between beginner, intermediate, and advanced levels.
@@ -47,16 +19,9 @@ Use LaTeX to represent **all** mathematical expressions, equations, and formulas
 
 The flashcards should cover the following key concept:
 {concept}
-\n""",
-    input_variables = ["level", "topic", "unit", "concept"],
-)
+\n'''
 
-flashcards_chain = flashcards_prompt | model
-
-# ---- [ STEP 2 ] -- [ Refine the cards ] ----
-
-refinement_prompt = PromptTemplate(
-    template = r"""
+refinement_instructions = r'''
 You must edit the following flashcards to use concise language.
 
 All cards must span a single line, new lines are not allowed.
@@ -64,17 +29,10 @@ All cards must span a single line, new lines are not allowed.
 All cards must retain a front (prompt) and back (response) format.
 
 ## The Flashcards
-{flashcards}
-\n""",
-    input_variables = ["flashcards"],
-)
+{content}
+\n'''
 
-refinement_chain = refinement_prompt | model
-
-# ---- [ STEP 3 ] -- [ Output valid format ] ----
-
-formatting_prompt = PromptTemplate(
-    template = r"""
+formatting_instructions = r'''
 You will format the provided flashcards as outlined.
 
 ## LaTeX Formatting Instructions
@@ -91,15 +49,67 @@ You will format the provided flashcards as outlined.
 {format_instructions}
 
 ## Flashcards
-{flashcards}
-\n""",
-    input_variables = ["flashcards"],
+{content}
+\n'''
+
+# [ Request Example ]
+# Level: High-school
+# Topic: Photosynthesis
+# Unit: Introduction to Photosynthesis
+# Concept: The Photosynthesis Equation
+
+# create the model
+model = ChatGoogleGenerativeAI(
+    model="gemini-1.5-flash",
+    temperature=0.3,
+    max_tokens=5000,
+)
+
+# function to extract the content from the AIMessage object
+def extract_content(ai_message):
+    return {"content": ai_message.content}
+
+# define the data structure using pydantic
+class Card(BaseModel):
+    difficulty: str = Field(description="beginner/intermediate/advanced")
+    front: str = Field(description="The flashcard prompt")
+    back: str = Field(description="The flashcard response")
+class Set(BaseModel):
+    set: List[Card] = Field(description="A collection of flashcards")
+
+# create the parsers
+str_parser = StrOutputParser()
+json_parser = JsonOutputParser(pydantic_object=Set)
+
+# ---- [ STEP 1 ] -- [ Create Flashcards ] ----
+
+generation_prompt = PromptTemplate(
+    template = generation_instructions,
+    input_variables = ["level", "topic", "unit", "concept"],
+)
+
+generation_chain = (generation_prompt | model | extract_content).with_config({"run_name": "Generation"})
+
+# ---- [ STEP 2 ] -- [ Refine the cards ] ----
+
+refinement_prompt = PromptTemplate(
+    template = refinement_instructions,
+    input_variables = ["content"],
+)
+
+refinement_chain = (refinement_prompt | model | extract_content).with_config({"run_name": "Refinement"})
+
+# ---- [ STEP 3 ] -- [ Output valid format ] ----
+
+formatting_prompt = PromptTemplate(
+    template = formatting_instructions,
+    input_variables = ["content"],
     partial_variables = {"format_instructions": json_parser.get_format_instructions()},
 )
 
-formatting_chain = formatting_prompt | model | json_parser
+formatting_chain = (formatting_prompt | model | json_parser).with_config({"run_name": "Formatting"})
 
 
 # ------ [ Final Chain ] ------
 
-final_chain = flashcards_chain | refinement_chain | formatting_chain
+final_chain = (generation_chain | refinement_chain | formatting_chain).with_config({"run_name": "Full flashcard generation"})
