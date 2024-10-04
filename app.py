@@ -3,9 +3,22 @@ import json
 
 app = Flask(__name__)
 
+# Enable debug mode
+app.config['DEBUG'] = True
+app.config['TEMPLATES_AUTO_RELOAD'] = True
+
 @app.route('/')
 def home():   
-    return render_template('index.html')
+    return render_template('./home/home.html')
+
+@app.route('/sign_up')
+def sign_up():
+    return render_template('home/sign_up.html')
+
+@app.route('/sign_in')
+def sign_in():
+    return render_template('home/sign_in.html')
+
 
 @app.route('/dashboard')
 def dashboard():
@@ -32,4 +45,4 @@ def get_deck(topic):
         return "Deck not found", 404
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000, debug=True)
+    app.run(host="0.0.0.0", port=8000, debug=True, use_reloader=True)
