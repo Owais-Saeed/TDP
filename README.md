@@ -2,7 +2,7 @@
 
 Our application is designed to generate educational STEM flashcards for high-school students. The application utilises proven study techniques including retrieval practice, and incremental rehearsal.
 
-![Application screenshot](static/images/screenshot.png)
+![Application screenshot](./app/static/images/screenshot.png)
 
 ## Technologies used
 

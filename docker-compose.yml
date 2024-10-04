@@ -1,13 +1,12 @@
 services:
   flask-app:
-    build: .
+    build: ./app
     container_name: flask-app
     restart: unless-stopped
     ports:
       - "8000:5000"
     volumes:
-      - .:/app
-      # - /app/__pycache__
+      - ./app:/app
     depends_on:
       - langserve
       - mongodb
