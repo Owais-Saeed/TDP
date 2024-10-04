@@ -1,11 +1,13 @@
 # Gemini Integration
 from langchain_google_genai import ChatGoogleGenerativeAI
 # LangChain Core
-from langchain_core.output_parsers import StrOutputParser, JsonOutputParser
-from langchain_core.prompts import PromptTemplate, ChatPromptTemplate
+from langchain_core.output_parsers import JsonOutputParser
+from langchain_core.prompts import PromptTemplate
 from pydantic import BaseModel, Field
 # Arrays
 from typing import Any, Dict, List
+# Prompts
+from prompts import outline_instructions
 
 # create the model
 model = ChatGoogleGenerativeAI(
@@ -38,12 +40,7 @@ class Course(BaseModel):
 parser = JsonOutputParser(pydantic_object=Course)
 
 prompt = PromptTemplate(
-    template="""
-Provide a unit outline based on {topic}.
-Aim for a high-school level, between 4-6 units.
-
-{format_instructions}
-\n""",
+    template=outline_instructions,
     input_variables=["topic"],
     partial_variables={"format_instructions": parser.get_format_instructions()},
 )
