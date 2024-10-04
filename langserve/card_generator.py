@@ -1,7 +1,7 @@
 # card_generator.py
 
 # Gemini Integration
-from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
+from langchain_google_genai import GoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 # LangChain
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser, JsonOutputParser
@@ -16,6 +16,16 @@ from typing import Any, Dict, List
 # Topic: Photosynthesis
 # Unit: Introduction to Photosynthesis
 # Concept: The Photosynthesis Equation
+
+# create the model
+model = GoogleGenerativeAI(
+    model="gemini-1.5-flash-8b",
+    temperature=0.3,
+    max_tokens=5000,
+)
+
+# memory variable
+memory = {}
 
 generation_instructions = r'''
 You are an educational content creator. Generate a set of 8–10 concise flashcards for a {level} level student. The course topic is "{topic}", and this set is part of "{unit}".
@@ -175,16 +185,6 @@ You are a formatting specialist tasked with refining a set of educational flashc
 Provide the formatted flashcards below.
 \n'''
 
-# create the model
-model = ChatGoogleGenerativeAI(
-    model="gemini-1.5-flash",
-    temperature=0.3,
-    max_tokens=5000,
-)
-
-# memory variable
-memory = {}
-
 # functions to access and manipulate memory
 def store_input(input_data):
     memory.update(input_data)
@@ -194,7 +194,7 @@ def get_memory():
     return memory
 
 def store_content(ai_message, descriptor: str):
-    memory.update({descriptor: ai_message.content})
+    memory.update({descriptor: ai_message})
     return memory
 
 

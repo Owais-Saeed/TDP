@@ -1,15 +1,15 @@
 # Gemini Integration
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_google_genai import GoogleGenerativeAI
 # LangChain Core
 from langchain_core.output_parsers import StrOutputParser, JsonOutputParser
-from langchain_core.prompts import PromptTemplate, ChatPromptTemplate
+from langchain_core.prompts import PromptTemplate
 from pydantic import BaseModel, Field
 # Arrays
 from typing import Any, Dict, List
 
 # create the model
-model = ChatGoogleGenerativeAI(
-    model="gemini-1.5-flash",
+model = GoogleGenerativeAI(
+    model="gemini-1.5-flash-8b",
     temperature=0.3,
     max_tokens=10000,
     timeout=None,
