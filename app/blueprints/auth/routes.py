@@ -90,6 +90,6 @@ def register():
         # log the user in
         login_user(user)
         flash('You are registered.', 'success')
-        return redirect(url_for('dashboard.dashboard_home'))
+        return redirect(url_for('dashboard.home'))
 
     return render_template('auth/register.html', form=form)
