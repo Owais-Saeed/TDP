@@ -6,5 +6,5 @@ from flask_login import login_required, current_user
 
 @dashboard_bp.route('/', methods=['GET'])
 @login_required
-def dashboard_home():
+def home():
     return render_template('dashboard/home.html', user=current_user)

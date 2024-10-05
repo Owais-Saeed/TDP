@@ -3,28 +3,45 @@
 from flask import render_template, redirect, url_for, flash, request
 from . import auth_bp
 from app.extensions import mongo
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 from app.models.user import User
-from .forms import RegistrationForm
+from .forms import RegistrationForm, LoginForm
 from bson.objectid import ObjectId
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        # handle login
-        # email = request.form['email']
-        email = request.form.get('email')
-        # password = request.form['password']
-        password = request.form.get('password')
+    form = LoginForm()
+
+    # redirect if user is already logged in
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard.home'))
+
+    # validate login form
+    if form.validate_on_submit():
+        email = form.email.data.strip().lower()
+        password = form.password.data
+
+        # retrieve user from mongo
         user_data = mongo.db.users.find_one({'email': email})
-        if user_data and User.verify_password(user_data, password):
-            user = User(user_data)
+        if not user_data:
+            flash('User does not exist', 'warning')
+            return redirect(url_for('auth.login'))
+
+        # create a user object
+        user = User(user_data)
+
+        # verify password
+        if user.verify_password(user, password):
             login_user(user)
-            flash('You are logged in.', 'success')
-            return redirect(url_for('dashboard.dashboard_home'))
+            flash('Logged in successfully', 'success')
+
+            # redirect
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for('dashboard.home'))
         else:
-            flash('Invalid credentials.', 'danger')
-    return render_template('auth/login.html')
+            flash('Incorrect password.', 'danger')
+
+    return render_template('auth/login.html', form=form)
 
 @auth_bp.route('/logout')
 @login_required
@@ -36,6 +53,11 @@ def logout():
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
+
+    # redirect if user is already logged in
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard.home'))
+
     if form.validate_on_submit():
         name = form.name.data.strip()
         email = form.email.data.strip().lower()
