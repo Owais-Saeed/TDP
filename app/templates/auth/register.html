@@ -1,0 +1,61 @@
+{% extends "auth/base_auth.html" %}
+
+{% block title %}Sign-up{% endblock %}
+
+{% block header %}Sign-up{% endblock %}
+
+{% block content %}
+
+<div class="col-lg-5 mx-auto">
+  <form class="p-3 p-md-4 border rounded-3 bg-body-tertiary" method="POST" action="{{ url_for('auth.register') }}">
+    <!-- for CSRF token -->
+    {{ form.hidden_tag() }}
+
+    <!-- Name Field -->
+    <div class="form-floating mb-3">
+      {{ form.name(class="form-control", id="name", placeholder="John") }}
+      <label for="name">Name</label>
+      {% for error in form.name.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <!-- Email Field -->
+    <div class="form-floating mb-3">
+      {{ form.email(class="form-control", id="email", placeholder="j.appleseed@email.com", required=True) }}
+      <label for="email">Email</label>
+      {% for error in form.email.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <!-- Password Field -->
+    <div class="input-group mb-3">
+      <div class="form-floating">
+        {{ form.password(class="form-control", id="password", placeholder="password", required=True) }}
+        <label for="password">Password</label>
+        {% for error in form.password.errors %}
+          <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+      </div>
+      <div class="form-floating">
+        {{ form.confirm_password(class="form-control", id="confirm_password", placeholder="confirm password", required=True) }}
+        <label for="confirm_password">Confirm</label>
+        {% for error in form.confirm_password.errors %}
+          <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <hr class="my-4">
+
+    <!-- Submit Button -->
+    {{ form.submit(class="w-100 btn btn-lg btn-primary") }}
+
+    <p class="m-0 mt-3 text-center">
+      <a class="link-secondary" href="{{ url_for('auth.login') }}">Already have an account?</a>
+    </p>
+  </form>
+</div>
+
+{% endblock %}

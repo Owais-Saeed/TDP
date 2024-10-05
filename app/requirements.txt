@@ -2,3 +2,10 @@
 Flask~=3.0.3
 requests
 python-dotenv
+
+# flask extensions
+flask_pymongo
+flask_migrate
+flask_login
+Flask-WTF
+email-validator

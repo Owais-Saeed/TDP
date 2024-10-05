@@ -13,9 +13,10 @@ services:
     env_file:
       - .env
     environment:
-      FLASK_ENV: development
-      FLASK_APP: app.py
-      MONGO_URI: mongodb://mongodb:27017/mydatabase
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
+      - FLASK_APP=app.py
+      - MONGO_URI=mongodb://mongodb:27017/mydatabase
     command: flask run --host=0.0.0.0
 
   langserve:
