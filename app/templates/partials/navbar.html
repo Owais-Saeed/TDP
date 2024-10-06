@@ -1,0 +1,53 @@
+<!-- partials/navbar.html -->
+
+{% macro navbar(back_url, back_label, page_title, options_menu, user_name) %}
+<nav class="navbar sticky-top navbar-expand-lg py-3 px-1">
+  <div class="container-fluid">
+    <!-- left content -->
+    <div class="text-left d-flex justify-content-start w-25">
+      {% if back_url %}
+        <a class="btn btn-link text-body text-decoration-none px-0" href="{{ back_url }}">
+          <i class="bi bi-chevron-left me-2"></i>
+          {% if back_url %}
+            {{ back_label }}
+          {% endif %}
+        </a>
+      {% endif %}
+    </div>
+    <!-- center content -->
+    <div class="text-center d-flex justify-content-center">
+      {% if page_title %}
+        <span class="navbar-brand mb-0 h1">{{ page_title }}</span>
+      {% endif %}
+    </div>
+    <!-- right content -->
+    <div class="text-right d-flex justify-content-end w-25">
+      {% if options_menu %}
+        <div class="dropdown">
+          {% if user_name %}
+            <a class="btn btn-link text-body text-decoration-none d-flex justify-content-end align-items-center gap-2" href="#" data-bs-toggle="dropdown">
+              <span>{{ user_name }}</span>
+              <div class="rounded-circle me-2" style="background: black; aspect-ratio: 1 / 1; height: 32px;"></div>
+            </a>
+          {% else %}
+            <a class="btn btn-link text-body text-decoration-none" href="#" data-bs-toggle="dropdown">
+              <i class="bi bi-list"></i>
+            </a>
+          {% endif %}
+
+          <ul class="dropdown-menu dropdown-menu-end">
+            {% for option in options_menu %}
+              <li><a class="dropdown-item" href="{{ option.url }}">
+                {% if option.icon %}
+                  <i class="{{ option.icon }} me-2"></i>
+                {% endif %}
+                {{ option.name }}
+              </a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+{% endmacro %}
