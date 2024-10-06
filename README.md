@@ -19,6 +19,7 @@ Our application is designed to generate educational STEM flashcards for high-sch
 
 - Docker ([Docker Desktop](https://www.docker.com/products/docker-desktop/) is recommended)
 - Git ([GitHub Desktop](https://desktop.github.com/download/) is recommended)
+- Google Gemini API Key (Create an API key at [Google AI Studio](https://aistudio.google.com))
 
 ### Installation
 
