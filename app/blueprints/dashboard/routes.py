@@ -17,4 +17,11 @@ def home():
         'dashboard/home.html',
         user=current_user,
         options_menu=options,
+        data=[
+            { 'title': 'Photosynthesis' },
+            { 'title': 'Geology' },
+            { 'title': 'Chemistry' },
+            { 'title': 'Physics' },
+            { 'title': 'Trigonometry' },
+        ],
     )

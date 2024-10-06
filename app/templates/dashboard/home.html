@@ -6,8 +6,35 @@
 Dashboard
 {% endblock %}
 
+{% import 'partials/thumbnail_card.html' as thumbnail_card_template %}
+
 {% block content %}
 
-<p>There is no content.</p>
+<div class="container-fluid p-0">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4">
+
+        <!-- new set button -->
+        <div class="col">
+            <div class="thumbnail">
+                <div class="thumbnail-card thumbnail-new">
+                    <i class="bi bi-plus-circle"></i>
+                    <span class="thumbnail-title">
+                        New Set
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- existing sets -->
+        {% if data %}
+            {% for thumbnail_data in data %}
+                <div class="col">
+                    {{ thumbnail_card_template.thumbnail_card(title=thumbnail_data.title) }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+    </div>
+</div>
 
 {% endblock %}
