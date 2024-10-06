@@ -1,11 +1,10 @@
 {% extends "base.html" %}
 
+{% import 'partials/navbar.html' as nav %}
+
 {% block page %}
-<nav class="navbar navbar-expand-lg">
-  <div class="container-fluid">
-    <a class="btn" href="{{ url_for('main.home') }}"><i class="bi bi-chevron-left"></i> Back</a>
-  </div>
-</nav>
+
+{{ nav.navbar(back_url=url_for('main.home'), back_label='Back') }}
 
 <div class="container my-4">
   <h1 class="display-6 fw-bold text-body-emphasis text-center mb-5">{% block header %}{% endblock %}</h1>
