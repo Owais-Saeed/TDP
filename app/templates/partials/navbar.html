@@ -39,7 +39,7 @@
             {% for option in options_menu %}
               <li><a class="dropdown-item" href="{{ option.url }}">
                 {% if option.icon %}
-                  <i class="{{ option.icon }} me-2"></i>
+                  <i class="bi {{ option.icon }} me-2"></i>
                 {% endif %}
                 {{ option.name }}
               </a></li>

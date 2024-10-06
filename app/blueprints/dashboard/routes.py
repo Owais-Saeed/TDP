@@ -5,9 +5,9 @@ from . import dashboard_bp
 from flask_login import login_required, current_user
 
 options = [
-    { 'name': 'Profile', 'url': '#', 'icon': '' },
-    { 'name': 'Settings', 'url': '#', 'icon': '' },
-    { 'name': 'Sign Out', 'url': '/auth/logout', 'icon': '' },
+    { 'name': 'Profile', 'url': '#', 'icon': 'bi-person-circle' },
+    { 'name': 'Settings', 'url': '#', 'icon': 'bi-gear' },
+    { 'name': 'Sign Out', 'url': '/auth/logout', 'icon': 'bi-box-arrow-right' },
 ]
 
 @dashboard_bp.route('/', methods=['GET'])
