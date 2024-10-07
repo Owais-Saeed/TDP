@@ -1,5 +1,19 @@
 /* css/styles.css */
 
+body {
+    min-height: 100vh;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+.hover-highlight {
+    color: var(--bs-body-color);
+    transition: color 0.1s ease-out;
+}
+.hover-highlight:hover {
+    color: var(--bs-primary);
+}
 
 /* ------------------------------------------------------------
     Thumbnails
@@ -71,4 +85,41 @@
 
 .directory-header i {
     font-size: 28px;
+    margin-left: -36px;
+}
+
+@media (max-width: 576px) {
+    .directory-header i {
+        margin-left: -12px;
+    }
+}
+
+@keyframes loadingIndicator {
+    0% { backdrop-filter: hue-rotate(0deg); filter: hue-rotate(0deg) }
+    100% { backdrop-filter: hue-rotate(360deg); filter: hue-rotate(360deg) }
+}
+
+.loading-indicator {
+    background: hsl(0, 100%, 80%);
+    animation: loadingIndicator 2s infinite linear;
+}
+
+/* ------------------------------------------------------------
+    New Deck
+*/
+.text-line {
+    height: 2px;
+    width: 100%;
+    background-color: var(--bs-secondary-bg);
+}
+.input-lg {
+    border: none;
+    background: none;
+    width: 100%;
+}
+.input-lg:focus {
+    outline: none;
+}
+.input-lg::placeholder {
+    color: var(--bs-tertiary-color);
 }

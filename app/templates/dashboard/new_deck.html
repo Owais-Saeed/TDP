@@ -5,30 +5,33 @@
 {% block content %}
 
 <div class="container-fluid p-0">
-  <form method="POST" action="{{ url_for('dashboard.new_deck') }}">
-    <!-- for CSRF token -->
-    {{ form.hidden_tag() }}
 
-    <div class="form-floating mb-3">
-      {{ form.title(class="form-control", id="title", placeholder="Photosynthesis") }}
-      <label for="title">Title</label>
-      {% for error in form.title.errors %}
-        <div class="text-danger">{{ error }}</div>
-      {% endfor %}
+  <!-- input -->
+  <div class="row container-fluid">
+    <div class="col-md-auto p-0">
+      <span class="display-6">About&nbsp;</span>
+      <div class="text-line"></div>
     </div>
+    <div class="col p-0">
+      <div style="display: flex; gap:10px;">
+        <input class="display-6 p-0 m-0 input-lg" style="" id="title" type="text" placeholder="Photosynthesis">
+        <a onclick="generate_deck()" class="text-decoration-none display-6 cursor-pointer hover-highlight"><i class="bi bi-arrow-right-circle"></i></a>
+      </div>
+      <div class="text-line"></div>
+    </div>
+  </div>
 
-    <hr class="my-4">
+  <!-- status indicator -->
+  <div id="status-container" class="d-flex align-items-center mt-4 text-secondary visually-hidden">
+    <div id="status-icon"></div>
+    <span id="status-description" role="status" class="ms-2"></span>
+  </div>
 
-    <!-- Submit Button -->
-    {{ form.submit(class="w-100 btn btn-lg btn-primary") }}
-  </form>
+  <!-- data -->
+  <div id="api-data" class="mt-4">
+  </div>
+
 </div>
-
-<div id="api-data">
-
-</div>
-
-<button onclick="generate_deck()">Generate Deck</button>
 
 <script src="{{ url_for('static', filename='js/purify.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/new_deck.js') }}"></script>
