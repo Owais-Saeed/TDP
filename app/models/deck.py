@@ -1,4 +1,4 @@
-# models/set.py
+# models/deck.py
 import pymongo
 from bson.objectid import ObjectId
 from .user import User
@@ -10,12 +10,18 @@ class Deck:
         if data:
             self.id = str(data.get('_id'))
             self.title = data.get('title')
+            self.topic = data.get('topic')
+            self.level = data.get('level')
+            self.units = data.get('units', [])
             self.user_id = data.get('user_id')
             self.created_at = data.get('created_at', datetime.utcnow())
             self.card_count = data.get('card_count', 0)
         else:
             self.id = None
             self.title = ''
+            self.topic = ''
+            self.level = ''
+            self.units = []
             self.user_id = ''
             self.created_at = datetime.utcnow()
             self.card_count = 0
@@ -23,6 +29,9 @@ class Deck:
     def save(self):
         deck_data = {
             'title': self.title,
+            'topic': self.topic,
+            'level': self.level,
+            'units': self.units,
             'user_id': ObjectId(self.user_id),
             'created_at': self.created_at,
             'card_count': self.card_count
@@ -37,8 +46,8 @@ class Deck:
 
     @staticmethod
     def get_decks_by_user(mongo_db, user_id):
-        sets = mongo_db.decks.find({'user_id': ObjectId(user_id)}).sort('created_at', -1)
-        return sets
+        decks = mongo_db.decks.find({'user_id': ObjectId(user_id)}).sort('created_at', -1)
+        return decks
 
     @staticmethod
     def get_deck(mongo_db, set_id):

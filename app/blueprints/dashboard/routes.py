@@ -7,8 +7,11 @@ from app.extensions import mongo
 from app.models.deck import Deck
 from .forms import CreateDeckForm
 from bson.objectid import ObjectId
+# get the time
 from datetime import datetime
 import pytz
+# for API requests
+import requests
 
 options = [
     { 'name': 'Profile', 'url': '#', 'icon': 'bi-person-circle' },
@@ -55,7 +58,9 @@ def home():
 @dashboard_bp.route('/new_deck', methods=['GET', 'POST'])
 @login_required
 def new_deck():
-    if request.method == 'POST':
+    form = CreateDeckForm()
+
+    if form.validate_on_submit():
         title = request.form.get('title')
 
         if not title:
@@ -65,6 +70,7 @@ def new_deck():
         # create the new deck
         new_deck = Deck(mongo.db)
         new_deck.title = title
+        new_deck.units = []
         new_deck.user_id = current_user.id
         new_deck.card_count = 0
         new_deck.save()
@@ -72,7 +78,6 @@ def new_deck():
         flash(f'Deck "{title}" has been created!', 'success')
         return redirect(url_for('dashboard.home'))
 
-    form = CreateDeckForm()
     return render_template(
         'dashboard/new_deck.html',
         user=current_user,

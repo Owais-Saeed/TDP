@@ -6,6 +6,9 @@
 
 <div class="container-fluid p-0">
   <form method="POST" action="{{ url_for('dashboard.new_deck') }}">
+    <!-- for CSRF token -->
+    {{ form.hidden_tag() }}
+
     <div class="form-floating mb-3">
       {{ form.title(class="form-control", id="title", placeholder="Photosynthesis") }}
       <label for="title">Title</label>
@@ -20,5 +23,14 @@
     {{ form.submit(class="w-100 btn btn-lg btn-primary") }}
   </form>
 </div>
+
+<div id="api-data">
+
+</div>
+
+<button onclick="generate_deck()">Generate Deck</button>
+
+<script src="{{ url_for('static', filename='js/purify.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/new_deck.js') }}"></script>
 
 {% endblock %}
