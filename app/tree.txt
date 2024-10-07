@@ -1,0 +1,75 @@
+.
+├── Dockerfile
+├── __init__.py
+├── __pycache__
+│   ├── __init__.cpython-312.pyc
+│   ├── app.cpython-312.pyc
+│   ├── config.cpython-312.pyc
+│   └── extensions.cpython-312.pyc
+├── app.py
+├── blueprints
+│   ├── auth
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-312.pyc
+│   │   │   ├── forms.cpython-312.pyc
+│   │   │   └── routes.cpython-312.pyc
+│   │   ├── forms.py
+│   │   └── routes.py
+│   ├── dashboard
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-312.pyc
+│   │   │   └── routes.cpython-312.pyc
+│   │   └── routes.py
+│   └── main
+│       ├── __init__.py
+│       ├── __pycache__
+│       │   ├── __init__.cpython-312.pyc
+│       │   └── routes.cpython-312.pyc
+│       └── routes.py
+├── config.py
+├── extensions.py
+├── models
+│   ├── __pycache__
+│   │   └── user.cpython-312.pyc
+│   ├── set.py
+│   └── user.py
+├── requirements.txt
+├── response.json
+├── static
+│   ├── css
+│   │   ├── dashboard.css
+│   │   ├── flashcards.css
+│   │   └── styles.css
+│   ├── images
+│   │   ├── flashcard-dark.png
+│   │   ├── flashcard.png
+│   │   └── screenshot.png
+│   ├── js
+│   │   └── scripts.js
+│   └── scripts
+│       └── flashcards.js
+├── templates
+│   ├── auth
+│   │   ├── base_auth.html
+│   │   ├── login.html
+│   │   └── register.html
+│   ├── base.html
+│   ├── dashboard
+│   │   ├── base_dashboard.html
+│   │   └── home.html
+│   ├── dashboard.html
+│   ├── flashcards.html
+│   ├── home.html
+│   ├── new_deck.html
+│   ├── partials
+│   │   ├── flash_messages.html
+│   │   ├── footer.html
+│   │   ├── navbar.html
+│   │   └── thumbnail_card.html
+│   ├── profile.html
+│   └── settings.html
+└── tree.txt
+
+20 directories, 53 files

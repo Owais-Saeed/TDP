@@ -3,7 +3,7 @@
 {% block title %} | Dashboard{% endblock %}
 
 {% block header %}
-Dashboard
+Hello
 {% endblock %}
 
 {% import 'partials/thumbnail_card.html' as thumbnail_card_template %}
@@ -16,12 +16,12 @@ Dashboard
         <!-- new set button -->
         <div class="col">
             <div class="thumbnail">
-                <div class="thumbnail-card thumbnail-new">
+                <a href="{{ url_for('dashboard.create_deck') }}" class="thumbnail-card thumbnail-new">
                     <i class="bi bi-plus-circle"></i>
                     <span class="thumbnail-title">
-                        New Set
+                        New Deck
                     </span>
-                </div>
+                </a>
             </div>
         </div>
 
@@ -29,7 +29,10 @@ Dashboard
         {% if data %}
             {% for thumbnail_data in data %}
                 <div class="col">
-                    {{ thumbnail_card_template.thumbnail_card(title=thumbnail_data.title) }}
+                    {{ thumbnail_card_template.thumbnail_card(
+                        title=thumbnail_data.title,
+                        count=thumbnail_data.card_count
+                    ) }}
                 </div>
             {% endfor %}
         {% endif %}

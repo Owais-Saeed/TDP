@@ -1,0 +1,28 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+{% block title %} | New Deck{% endblock %}
+
+{% block header %}
+New Deck
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid p-0">
+  <form method="POST" action="{{ url_for('dashboard.create_deck') }}">
+    <div class="form-floating mb-3">
+      {{ form.title(class="form-control", id="title", placeholder="Photosynthesis") }}
+      <label for="title">Title</label>
+      {% for error in form.title.errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <hr class="my-4">
+
+    <!-- Submit Button -->
+    {{ form.submit(class="w-100 btn btn-lg btn-primary") }}
+  </form>
+</div>
+
+{% endblock %}
