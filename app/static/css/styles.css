@@ -1,5 +1,25 @@
 /* css/styles.css */
 
+/* ------------------------------------------------------------
+    Variables
+*/
+
+:root {
+    /* borders */
+    --card-border: 1px solid rgba(24,52,78,0.10);
+
+    /* shadows */
+    --card-shadow: inset 0px -1px 6px -4px rgba(24,52,78,0.33);
+
+    /* transitions */
+    --transition-fast: 0.1s ease-out;
+    --transition-medium: 0.2s ease-out;
+}
+
+/* ------------------------------------------------------------
+    Main Elements
+*/
+
 body {
     min-height: 100vh;
 }
@@ -9,7 +29,7 @@ body {
 }
 .hover-highlight {
     color: var(--bs-body-color);
-    transition: color 0.1s ease-out;
+    transition: color var(--transition-fast);
 }
 .hover-highlight:hover {
     color: var(--bs-primary);
@@ -45,12 +65,12 @@ body {
     background-image: url('../images/flashcard.png');
     background-size: cover;
     border-radius: 6px;
-    border: 1px solid rgba(24,52,78,0.10);
-    box-shadow: inset 0px -1px 6px -4px rgba(24,52,78,0.33);
-    transition: scale 0.1s ease-out;
+    border: var(--card-border);
+    box-shadow: var(--card-shadow);
+    transition: transform var(--transition-fast);
 }
 .thumbnail-flashcard:hover {
-    scale: 1.05;
+    transform: scale(1.05);
 }
 
 .thumbnail-title {
@@ -66,10 +86,73 @@ body {
 }
 
 .thumbnail-new{
-    transition: color 0.1s ease-out;
+    transition: color var(--transition-fast);
 }
 .thumbnail-new:hover {
     color: var(--bs-primary);
+}
+
+.thumbnail-deck {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: transform var(--transition-fast);
+}
+.thumbnail-deck-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-color: var(--bs-secondary-bg);
+    background-image: url('../images/flashcard.png');
+    background-size: cover;
+    border-radius: 6px;
+    border: var(--card-border);
+    box-shadow: var(--card-shadow);
+    transition: transform var(--transition-medium);
+    transform: scale(0.98) translateY(-2px);
+}
+.thumbnail-deck-background-empty {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-color: var(--bs-secondary-bg);
+    background-image: url('../images/deck.png');
+    background-size: cover;
+    border-radius: 2px;
+    border: var(--card-border);
+    box-shadow: var(--card-shadow);
+    filter: brightness(0.95);
+}
+.thumbnail-deck-foreground {
+    width: 100%;
+    height: 100%;
+    background-color: var(--bs-secondary-bg);
+    background-image: url('../images/deck.png');
+    background-size: cover;
+    transition: transform var(--transition-fast);
+    mask-image: url('../images/deck-mask.svg');
+    border-radius: 1px;
+    border: var(--card-border);
+    box-shadow: var(--card-shadow);
+    z-index: 1;
+    /* center the text */
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--bs-body-color);
+}
+.thumbnail-deck:hover .thumbnail-deck-background {
+    transform: scale(0.98) translateY(-16px);
+}
+.thumbnail-deck:hover {
+    transform: scale(1.05);
 }
 
 
