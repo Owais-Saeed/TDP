@@ -49,18 +49,18 @@ def home():
         user=current_user,
         options_menu=options,
         data=decks_data,
-        greeting=get_greeting(),
+        title=get_greeting(),
     )
 
-@dashboard_bp.route('/create_deck', methods=['GET', 'POST'])
+@dashboard_bp.route('/new_deck', methods=['GET', 'POST'])
 @login_required
-def create_deck():
+def new_deck():
     if request.method == 'POST':
         title = request.form.get('title')
 
         if not title:
             flash('Title is required.', 'warning')
-            return redirect(url_for('dashboard.create_deck'))
+            return redirect(url_for('dashboard.new_deck'))
 
         # create the new deck
         new_deck = Deck(mongo.db)
@@ -73,4 +73,11 @@ def create_deck():
         return redirect(url_for('dashboard.home'))
 
     form = CreateDeckForm()
-    return render_template('dashboard/create_deck.html', user=current_user, form=form)
+    return render_template(
+        'dashboard/new_deck.html',
+        user=current_user,
+        options_menu=options,
+        form=form,
+        title='New Deck',
+        back_url=url_for('dashboard.home'),
+    )

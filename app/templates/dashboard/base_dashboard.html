@@ -1,15 +1,16 @@
 {% extends "base.html" %}
 
 {% import 'partials/navbar.html' as nav %}
+{% import 'partials/directory_header.html' as header %}
 
 {% block page %}
 
 {{ nav.navbar(options_menu=options_menu, user_name=user.name) }}
 
 <div class="container my-4">
-  <h1 class="display-6 fw-bold text-body-emphasis text-left mb-5">
-    {% block header %}{% endblock %}
-  </h1>
+  <!-- header -->
+  {{ header.directory_header(title=title, back_url=back_url) }}
+  <!-- content -->
   {% block content %}
   {% endblock %}
 </div>

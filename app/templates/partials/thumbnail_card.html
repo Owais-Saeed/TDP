@@ -7,6 +7,10 @@
         {{ title }}
       </span>
     </div>
-    <div class="thumbnail-description">{{ count }} {% if count == 1 %}card{% else %}cards{% endif %}</div>
+    {% if count %}
+      <div class="thumbnail-description">{{ count }} {% if count == 1 %}card{% else %}cards{% endif %}</div>
+    {% else %}
+      <div class="thumbnail-description">0 cards</div>
+    {% endif %}
   </div>
 {% endmacro %}

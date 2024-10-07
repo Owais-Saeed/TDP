@@ -2,14 +2,10 @@
 
 {% block title %} | New Deck{% endblock %}
 
-{% block header %}
-New Deck
-{% endblock %}
-
 {% block content %}
 
 <div class="container-fluid p-0">
-  <form method="POST" action="{{ url_for('dashboard.create_deck') }}">
+  <form method="POST" action="{{ url_for('dashboard.new_deck') }}">
     <div class="form-floating mb-3">
       {{ form.title(class="form-control", id="title", placeholder="Photosynthesis") }}
       <label for="title">Title</label>

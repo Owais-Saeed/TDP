@@ -57,3 +57,18 @@
 .thumbnail-new:hover {
     color: var(--bs-primary);
 }
+
+
+/* ------------------------------------------------------------
+    Directory Header
+*/
+
+.directory-header {
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+.directory-header i {
+    font-size: 28px;
+}
