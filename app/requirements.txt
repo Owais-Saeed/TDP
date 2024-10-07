@@ -9,3 +9,5 @@ flask_migrate
 flask_login
 Flask-WTF
 email-validator
+# python timezone
+pytz

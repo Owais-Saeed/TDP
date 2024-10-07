@@ -7,12 +7,27 @@ from app.extensions import mongo
 from app.models.deck import Deck
 from .forms import CreateDeckForm
 from bson.objectid import ObjectId
+from datetime import datetime
+import pytz
 
 options = [
     { 'name': 'Profile', 'url': '#', 'icon': 'bi-person-circle' },
     { 'name': 'Settings', 'url': '#', 'icon': 'bi-gear' },
     { 'name': 'Sign Out', 'url': '/auth/logout', 'icon': 'bi-box-arrow-right' },
 ]
+
+def get_greeting():
+    # pleasant greeting
+    timezone = pytz.timezone('Australia/Melbourne')
+    now = datetime.now(timezone)
+    current_hour = now.hour
+
+    if 5 <= current_hour < 12:
+        return "Good morning"
+    elif 12 <= current_hour < 18:
+        return "Good afternoon"
+    else:
+        return "Good evening"
 
 @dashboard_bp.route('/', methods=['GET'])
 @login_required
@@ -34,6 +49,7 @@ def home():
         user=current_user,
         options_menu=options,
         data=decks_data,
+        greeting=get_greeting(),
     )
 
 @dashboard_bp.route('/create_deck', methods=['GET', 'POST'])
