@@ -206,3 +206,6 @@ body {
 .input-lg::placeholder {
     color: var(--bs-tertiary-color);
 }
+#input-lg-feedback {
+    color: var(--bs-danger);
+}
