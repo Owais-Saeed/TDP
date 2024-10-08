@@ -230,5 +230,4 @@ body {
     background: var(--bs-body-bg);
     display: flex;
     justify-content: end;
-    border-top: 2px solid var(--bs-border-color);
 }

@@ -134,6 +134,32 @@ function displayOutline(data) {
 function save_deck() {
     if (generatedData !== null) {
         // save the data
+        console.log("Saving...");
+        // disable the save button
+        document.getElementById('save-button').disabled = true;
+        document.getElementById('save-button').innerHTML = 'Saving...';
+        // send the data to flask
+        fetch('./save_deck', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(generatedData),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // redirect
+            if (data.status === 'success') {
+                window.location.href = data.redirect_url;
+            } else {
+                console.log('Did not receive response.');
+            }
+        })
+        .catch((error) => {
+            console.error('Error: ', error);
+        });
+    } else {
+        console.log("No data to save.");
     }
 }
 

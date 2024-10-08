@@ -1,6 +1,6 @@
 # blueprints/dashboard/routes.py
 
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, jsonify
 from . import dashboard_bp
 from flask_login import login_required, current_user
 from app.extensions import mongo
@@ -86,3 +86,25 @@ def new_deck():
         title='New Deck',
         back_url=url_for('dashboard.home'),
     )
+
+@dashboard_bp.route('/save_deck', methods=['GET', 'POST'])
+@login_required
+def save_deck():
+    new_deck_data = request.get_json()
+
+    if not new_deck_data:
+        flash('No data received.', 'warning')
+        return jsonify({'status': 'error', 'message': 'No data provided'}), 400
+
+    # create the new deck
+    new_deck = Deck(mongo.db)
+    new_deck.user_id = current_user.id
+    new_deck.title = new_deck_data['output']['topic']
+    new_deck.topic = new_deck_data['output']['topic']
+    new_deck.level = new_deck_data['output']['level']
+    new_deck.units = new_deck_data['output']['units']
+    new_deck.card_count = 1
+    new_deck.save()
+
+    flash(f'Deck "{new_deck.title}" has been created!', 'success')
+    return jsonify({'status': 'success', 'redirect_url': url_for('dashboard.home')}), 200
