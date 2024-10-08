@@ -4,23 +4,25 @@
 
 {% block content %}
 
+<!-- input -->
+<div class="container-fluid row pe-0">
+  <div class="col-md-auto p-0">
+    <span class="display-6">About&nbsp;</span>
+    <div class="text-line"></div>
+  </div>
+  <div class="col p-0">
+    <div style="display: flex; gap:10px;">
+      <input class="display-6 p-0 m-0 input-lg" style="" id="title" type="text" placeholder="photosynthesis">
+      <a onclick="generate_deck()" class="text-decoration-none display-6 cursor-pointer hover-highlight"><i class="bi bi-arrow-right-circle"></i></a>
+    </div>
+    <div class="text-line"></div>
+    <div id="input-lg-feedback" class="mt-1"></div>
+  </div>
+</div>
+
 <div class="container-fluid p-0">
 
-  <!-- input -->
-  <div class="row container-fluid">
-    <div class="col-md-auto p-0">
-      <span class="display-6">About&nbsp;</span>
-      <div class="text-line"></div>
-    </div>
-    <div class="col p-0">
-      <div style="display: flex; gap:10px;">
-        <input class="display-6 p-0 m-0 input-lg" style="" id="title" type="text" placeholder="Photosynthesis">
-        <a onclick="generate_deck()" class="text-decoration-none display-6 cursor-pointer hover-highlight"><i class="bi bi-arrow-right-circle"></i></a>
-      </div>
-      <div class="text-line"></div>
-      <div id="input-lg-feedback" class="mt-1"></div>
-    </div>
-  </div>
+
 
   <!-- status indicator -->
   <div id="status-container" class="d-flex align-items-center mt-4 text-secondary visually-hidden">
@@ -29,7 +31,11 @@
   </div>
 
   <!-- data -->
-  <div id="api-data" class="mt-4">
+  <div id="outline" style="min-height: 1000px;"></div>
+
+  <!-- confirmation -->
+  <div id="confirm" class="p-3 visually-hidden">
+    <button onclick="save_deck()" class="btn btn-primary px-4">Save</button>
   </div>
 
 </div>

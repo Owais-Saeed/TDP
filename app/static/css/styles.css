@@ -22,6 +22,13 @@
 
 body {
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Keeps the footer at the bottom of the page */
+#content {
+    flex-grow: 1;
 }
 
 .cursor-pointer {
@@ -193,7 +200,7 @@ body {
 .text-line {
     height: 2px;
     width: 100%;
-    background-color: var(--bs-secondary-bg);
+    background-color: var(--bs-border-color);
 }
 .input-lg {
     border: none;
@@ -208,4 +215,20 @@ body {
 }
 #input-lg-feedback {
     color: var(--bs-danger);
+}
+
+#outline {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+#confirm {
+    position: sticky;
+    bottom: 0;
+    background: var(--bs-body-bg);
+    display: flex;
+    justify-content: end;
+    border-top: 2px solid var(--bs-border-color);
 }

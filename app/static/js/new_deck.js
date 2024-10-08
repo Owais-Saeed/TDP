@@ -12,6 +12,9 @@ const statusText = document.getElementById('status-description');
 // for pressing enter to submit
 let inputFieldFocus = false;
 
+// store the generated json data
+let generatedData = null;
+
 // fetch data from langserve
 function generate_deck(){
     const topic = DOMPurify.sanitize(inputField.value).trim();
@@ -54,15 +57,16 @@ function generate_deck(){
     })
     .then(data => {
         // handle the response
-        console.log('API response: ', data);
 
         // update status
         statusIcon.innerHTML = '<i class="bi bi-check-circle-fill"></i>';
         statusText.innerHTML = 'Generated outline about \'' + topic + '\'';
 
+        // store the data
+        generatedData = data;
+
         // display the response in the DOM
-        const dataContainer = document.getElementById('api-data');
-        dataContainer.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+        displayOutline(data);
     })
     .catch(error => {
         // update status
@@ -71,6 +75,66 @@ function generate_deck(){
 
         console.error('Error fetching data: ', error);
     })
+}
+
+function displayOutline(data) {
+    const dataContainer = document.getElementById('outline');
+
+    dataContainer.innerHTML = '';
+
+    // create the heading
+    let outlineTitle = document.createElement('h2');
+    outlineTitle.classList.add('m-0');
+    outlineTitle.textContent = data.output.topic;
+    dataContainer.appendChild(outlineTitle);
+
+    // loop through units and create the cards
+    data.output.units.forEach((unit) => {
+        // create card div
+        let cardDiv = document.createElement('div');
+        cardDiv.classList.add('card');
+
+        // create card header
+        let cardHeader = document.createElement('div');
+        cardHeader.classList.add('card-header');
+        cardHeader.textContent = `Unit ${unit.id}`;
+
+        // create card body
+        let cardBody = document.createElement('div');
+        cardBody.classList.add('card-body');
+        let cardTitle = document.createElement('h3');
+        cardTitle.classList.add('card-title', 'm-0');
+        cardTitle.textContent = unit.title;
+        cardBody.appendChild(cardTitle);
+
+        // create list for outline concepts
+        let listGroup = document.createElement('ul');
+        listGroup.classList.add('list-group', 'list-group-flush');
+
+        unit.outline.forEach((item) => {
+            let listItem = document.createElement('li');
+            listItem.classList.add('list-group-item');
+            listItem.textContent = item.concept;
+            listGroup.appendChild(listItem);
+        });
+
+        // append everything together
+        cardDiv.appendChild(cardHeader);
+        cardDiv.appendChild(cardBody);
+        cardDiv.appendChild(listGroup);
+
+        // add card to outline
+        dataContainer.appendChild(cardDiv);
+    });
+
+    // show the save button
+    document.getElementById('confirm').classList.remove('visually-hidden');
+}
+
+function save_deck() {
+    if (generatedData !== null) {
+        // save the data
+    }
 }
 
 // when the field is in focus, take enter input to start generation
