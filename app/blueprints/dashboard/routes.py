@@ -38,7 +38,7 @@ def home():
     # fetch sets for current user from mongodb
     decks = Deck.get_decks_by_user(mongo.db, current_user.id)
 
-    # transform sets into a dict to pass to the template
+    # transform decks into a dict to pass to the template
     decks_data = []
     for deck_item in decks:
         decks_data.append({
@@ -55,34 +55,47 @@ def home():
         title=get_greeting(),
     )
 
+@dashboard_bp.route('/deck/<id>', methods=['GET'])
+@login_required
+def deck(id):
+    # fetch the deck
+    deck = Deck.get_deck(mongo.db, id)
+
+    # if deck doesn't exist
+    if not deck:
+        flash('Deck does not exist.', 'warning')
+        return redirect(url_for('dashboard.home'))
+
+    # if user does not have authentication to see the deck
+    if ObjectId(deck['user_id']) != ObjectId(current_user.id):
+        flash('You are not authorized to view this deck.', 'warning')
+        return redirect(url_for('dashboard.home'))
+
+    # transform decks into a dict to pass to the template
+    deck_data = []
+    for unit in deck.get('units', []):
+        deck_data.append({
+            'id': str(unit['id']),
+            'title': unit['title']
+        })
+
+    return render_template(
+        'dashboard/deck.html',
+        user=current_user,
+        options_menu=options,
+        data=deck_data,
+        title=deck.get('title'),
+        back_url=url_for('dashboard.home'),
+    )
+
+
 @dashboard_bp.route('/new_deck', methods=['GET', 'POST'])
 @login_required
 def new_deck():
-    form = CreateDeckForm()
-
-    if form.validate_on_submit():
-        title = request.form.get('title')
-
-        if not title:
-            flash('Title is required.', 'warning')
-            return redirect(url_for('dashboard.new_deck'))
-
-        # create the new deck
-        new_deck = Deck(mongo.db)
-        new_deck.title = title
-        new_deck.units = []
-        new_deck.user_id = current_user.id
-        new_deck.card_count = 0
-        new_deck.save()
-
-        flash(f'Deck "{title}" has been created!', 'success')
-        return redirect(url_for('dashboard.home'))
-
     return render_template(
         'dashboard/new_deck.html',
         user=current_user,
         options_menu=options,
-        form=form,
         title='New Deck',
         back_url=url_for('dashboard.home'),
     )

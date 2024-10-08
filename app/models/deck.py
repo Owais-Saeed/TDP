@@ -2,7 +2,7 @@
 import pymongo
 from bson.objectid import ObjectId
 from .user import User
-from datetime import datetime
+from datetime import datetime, timezone
 
 class Deck:
     def __init__(self, mongo_db, data=None):
@@ -14,7 +14,7 @@ class Deck:
             self.level = data.get('level')
             self.units = data.get('units', [])
             self.user_id = data.get('user_id')
-            self.created_at = data.get('created_at', datetime.utcnow())
+            self.created_at = data.get('created_at', datetime.now(timezone.utc))
             self.card_count = data.get('card_count', 0)
         else:
             self.id = None
@@ -23,7 +23,7 @@ class Deck:
             self.level = ''
             self.units = []
             self.user_id = ''
-            self.created_at = datetime.utcnow()
+            self.created_at = datetime.now(timezone.utc)
             self.card_count = 0
 
     def save(self):
@@ -50,5 +50,5 @@ class Deck:
         return decks
 
     @staticmethod
-    def get_deck(mongo_db, set_id):
-        return mongo_db.decks.find_one({'_id': ObjectId(set_id)})
+    def get_deck(mongo_db, deck_id):
+        return mongo_db.decks.find_one({'_id': ObjectId(deck_id)})

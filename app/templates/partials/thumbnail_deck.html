@@ -1,8 +1,8 @@
 <!-- partials/thumbnail_card.html -->
 
-{% macro thumbnail_card(title, count) %}
+{% macro thumbnail_card(id, title, count) %}
   <div class="thumbnail">
-    <div class="thumbnail-card thumbnail-deck">
+    <a class="thumbnail-card thumbnail-deck" href="{{ url_for('dashboard.deck', id=id) }}">
       {% if count %}
         <div class="thumbnail-deck-background"></div>
       {% else %}
@@ -13,7 +13,7 @@
           {{ title }}
         </span>
       </div>
-    </div>
+    </a>
     {% if count %}
       <div class="thumbnail-description">{{ count }} {% if count == 1 %}card{% else %}cards{% endif %}</div>
     {% else %}

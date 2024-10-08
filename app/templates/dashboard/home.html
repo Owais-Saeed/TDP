@@ -27,6 +27,7 @@
             {% for thumbnail_data in data %}
                 <div class="col">
                     {{ thumbnail_card_template.thumbnail_card(
+                        id=thumbnail_data.id,
                         title=thumbnail_data.title,
                         count=thumbnail_data.card_count
                     ) }}
