@@ -41,10 +41,11 @@ def home():
     # transform decks into a dict to pass to the template
     decks_data = []
     for deck_item in decks:
+        deck = Deck(mongo.db, deck_item)
         decks_data.append({
             'id': str(deck_item['_id']),
             'title': deck_item['title'],
-            'card_count': deck_item.get('card_count', 0),
+            'card_count': deck.get_card_count(),
         })
 
     return render_template(

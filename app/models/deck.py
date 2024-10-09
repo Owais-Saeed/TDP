@@ -15,7 +15,6 @@ class Deck:
             self.units = data.get('units', [])
             self.user_id = data.get('user_id')
             self.created_at = data.get('created_at', datetime.now(timezone.utc))
-            self.card_count = data.get('card_count', 0)
         else:
             self.id = None
             self.title = ''
@@ -24,7 +23,6 @@ class Deck:
             self.units = []
             self.user_id = ''
             self.created_at = datetime.now(timezone.utc)
-            self.card_count = 0
 
     def save(self):
         deck_data = {
@@ -34,7 +32,6 @@ class Deck:
             'units': self.units,
             'user_id': ObjectId(self.user_id),
             'created_at': self.created_at,
-            'card_count': self.card_count
         }
         if self.id:
             # update existing set
@@ -52,3 +49,10 @@ class Deck:
     @staticmethod
     def get_deck(mongo_db, deck_id):
         return mongo_db.decks.find_one({'_id': ObjectId(deck_id)})
+
+    def get_card_count(self):
+        total_cards = 0
+        for unit in self.units:
+            for concept in unit.get('concepts', []):
+                total_cards += len(concept.get('cards', []))
+        return total_cards
