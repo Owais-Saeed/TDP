@@ -20,7 +20,7 @@ function generate_deck(){
     const topic = DOMPurify.sanitize(inputField.value).trim();
 
     // refuse if field is empty
-    if (topic.length <= 4){
+    if (topic.length < 4){
         inputFeedback.innerHTML = '<i class="bi bi-exclamation-circle-fill me-1"></i>Topic must be at least 4 characters long';
         return;
     }
