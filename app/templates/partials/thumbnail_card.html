@@ -1,16 +1,14 @@
 <!-- partials/thumbnail_card.html -->
 
-{% macro thumbnail_card(title, count) %}
+{% macro thumbnail_card(title, description) %}
   <div class="thumbnail">
     <div class="thumbnail-card thumbnail-flashcard">
       <span class="thumbnail-title">
         {{ title }}
       </span>
     </div>
-    {% if count %}
-      <div class="thumbnail-description">{{ count }} {% if count == 1 %}card{% else %}cards{% endif %}</div>
-    {% else %}
-      <div class="thumbnail-description">0 cards</div>
+    {% if description %}
+      <div class="thumbnail-description">{{ description }}</div>
     {% endif %}
   </div>
 {% endmacro %}

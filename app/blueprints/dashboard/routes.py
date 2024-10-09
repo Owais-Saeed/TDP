@@ -74,16 +74,23 @@ def deck(id):
     # transform decks into a dict to pass to the template
     deck_data = []
     for unit in deck.get('units', []):
+        concepts = []
+        for concept in unit['outline']:
+            cards = []
+            for card in concept['cards']:
+                cards.append({'front': card['front'], 'back': card['back']})
+            concepts.append({'concept': concept['concept'], 'cards': cards})
         deck_data.append({
             'id': str(unit['id']),
-            'title': unit['title']
+            'title': unit['title'],
+            'concepts': concepts,
         })
 
     return render_template(
         'dashboard/deck.html',
         user=current_user,
         options_menu=options,
-        data=deck_data,
+        course=deck_data,
         title=deck.get('title'),
         back_url=url_for('dashboard.home'),
     )
@@ -116,6 +123,9 @@ def save_deck():
     new_deck.topic = new_deck_data['output']['topic']
     new_deck.level = new_deck_data['output']['level']
     new_deck.units = new_deck_data['output']['units']
+    for unit in new_deck.units:
+        for concept in unit['outline']:
+            concept['cards'] = []
     new_deck.card_count = 1
     new_deck.save()
 

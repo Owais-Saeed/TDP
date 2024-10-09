@@ -7,22 +7,36 @@
 {% block content %}
 
 <div class="container-fluid p-0">
-
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4">
-
-        <!-- existing sets -->
-        {% if data %}
-            {% for thumbnail_data in data %}
-                <div class="col">
-                    {{ thumbnail_card_template.thumbnail_card(
-                        title=thumbnail_data.title,
-                        count=thumbnail_data.card_count
-                    ) }}
-                </div>
-            {% endfor %}
-        {% endif %}
-
-    </div>
+    <!-- existing sets -->
+    {% if course %}
+        {% for unit in course %}
+            <hr>
+            <h2><span class="text-secondary me-2">Unit {{ unit.id }}</span> {{ unit.title }}</h2>
+            {% if unit.concepts %}
+                {% for concept in unit.concepts %}
+                    <h3>{{ concept.concept }}</h3>
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4">
+                        {% if concept.cards %}
+                            {% for card in concept.cards %}
+                                <div class="col">
+                                    {{ thumbnail_card_template.thumbnail_card(
+                                        title=card.front,
+                                        description='Beginner'
+                                    ) }}
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p>There are no cards.</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>There are no concepts.</p>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <p>There is no content.</p>
+    {% endif %}
 </div>
 
 {% endblock %}
