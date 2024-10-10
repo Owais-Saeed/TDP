@@ -41,11 +41,12 @@ def home():
     # transform decks into a dict to pass to the template
     decks_data = []
     for deck_item in decks:
-        deck = Deck(mongo.db, deck_item)
+        _deck = Deck(mongo.db, deck_item)
+        print(_deck, flush=True)
         decks_data.append({
             'id': str(deck_item['_id']),
             'title': deck_item['title'],
-            'card_count': deck.get_card_count(),
+            'card_count': _deck.get_card_count(),
         })
 
     return render_template(
@@ -123,11 +124,15 @@ def save_deck():
     new_deck.title = new_deck_data['output']['topic']
     new_deck.topic = new_deck_data['output']['topic']
     new_deck.level = new_deck_data['output']['level']
+
+    # save the cards
     new_deck.units = new_deck_data['output']['units']
     for unit in new_deck.units:
         for concept in unit['outline']:
-            concept['cards'] = []
-    new_deck.card_count = 1
+            concept['cards'] = [
+                {'front': 'Front of the card', 'back': 'Back of the card'}
+            ]
+
     new_deck.save()
 
     flash(f'Deck "{new_deck.title}" has been created!', 'success')

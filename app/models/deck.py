@@ -53,6 +53,6 @@ class Deck:
     def get_card_count(self):
         total_cards = 0
         for unit in self.units:
-            for concept in unit.get('concepts', []):
+            for concept in unit.get('outline', []):
                 total_cards += len(concept.get('cards', []))
         return total_cards
