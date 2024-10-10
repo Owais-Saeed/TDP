@@ -124,14 +124,10 @@ def save_deck():
     new_deck.title = new_deck_data['output']['topic']
     new_deck.topic = new_deck_data['output']['topic']
     new_deck.level = new_deck_data['output']['level']
-
-    # save the cards
     new_deck.units = new_deck_data['output']['units']
     for unit in new_deck.units:
         for concept in unit['outline']:
-            concept['cards'] = [
-                {'front': 'Front of the card', 'back': 'Back of the card'}
-            ]
+            concept['cards'] = []
 
     new_deck.save()
 
