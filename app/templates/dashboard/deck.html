@@ -1,6 +1,6 @@
 {% extends "dashboard/base_dashboard.html" %}
 
-{% block title %} | Dashboard{% endblock %}
+{% block title %} | {% if course.topic %}{{ course.topic }}{% else %}Empty Deck{% endif %}{% endblock %}
 
 {% import 'partials/thumbnail_card.html' as thumbnail_card_template %}
 
