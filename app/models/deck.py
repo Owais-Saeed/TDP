@@ -35,7 +35,7 @@ class Deck:
         }
         if self.id:
             # update existing set
-            self.mongo_db.decks.update_one({'_id': ObjectId(self.id)}, {'$deck': deck_data})
+            self.mongo_db.decks.update_one({'_id': ObjectId(self.id)}, {'$set': deck_data})
         else:
             # create new set
             result = self.mongo_db.decks.insert_one(deck_data)

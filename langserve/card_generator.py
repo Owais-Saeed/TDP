@@ -47,12 +47,12 @@ class Card(BaseModel):
     difficulty: str = Field(description="beginner/intermediate/advanced")
     front: str = Field(description="The flashcard prompt")
     back: str = Field(description="The flashcard response")
-class Set(BaseModel):
-    set: List[Card] = Field(description="A collection of flashcards")
+class Cards(BaseModel):
+    cards: List[Card] = Field(description="A collection of flashcards")
 
 # create the parsers
 str_parser = StrOutputParser()
-json_parser = JsonOutputParser(pydantic_object=Set)
+json_parser = JsonOutputParser(pydantic_object=Cards)
 
 # ---- [ STEP 1 ] -- [ Create Flashcards ] ----
 

@@ -6,29 +6,32 @@
 
 {% block content %}
 
-<div class="container-fluid p-0">
+<div class="container-fluid p-0 deck-course" {% if course %} data-cards-level="{{ course.level }}" data-cards-topic="{{ course.topic }}" {% endif %}>
     <!-- existing sets -->
-    {% if course %}
-        {% for unit in course %}
+    {% if course and course.units %}
+        <span id="deck-id" class="visually-hidden">{{ course.id }}</span>
+        {% for unit in course.units %}
             <hr>
-            <div class="unit pb-5">
+            <div class="unit pb-5 deck-unit" data-cards-unit="{{ unit.title }}">
                 <h2 class="mb-5"><span class="text-secondary me-2" style="font-weight: normal;">Unit {{ unit.id }}</span> {{ unit.title }}</h2>
                 {% if unit.concepts %}
                     {% for concept in unit.concepts %}
-                        <h3 class="mt-4" style="font-weight: normal;">{{ concept.concept }}</h3>
-                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4 mt-1">
-                            {% if concept.cards %}
-                                {% for card in concept.cards %}
-                                    <div class="col">
-                                        {{ thumbnail_card_template.thumbnail_card(
-                                            title=card.front,
-                                            description='Beginner'
-                                        ) }}
-                                    </div>
-                                {% endfor %}
-                            {% else %}
-                                <p>There are no cards. <a href="#">Generate.</a></p>
-                            {% endif %}
+                        <div class="deck-concept" data-cards-concept="{{ concept.concept }}">
+                            <h3 class="mt-4" style="font-weight: normal;">{{ concept.concept }}</h3>
+                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4 mt-1">
+                                {% if concept.cards %}
+                                    {% for card in concept.cards %}
+                                        <div class="col">
+                                            {{ thumbnail_card_template.thumbnail_card(
+                                                title=card.front,
+                                                description='Beginner'
+                                            ) }}
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <p><button type="button" class="btn btn-outline-primary cards-generate-button">Generate Cards</button></p>
+                                {% endif %}
+                            </div>
                         </div>
                     {% endfor %}
                 {% else %}
@@ -40,5 +43,7 @@
         <p>There is no content.</p>
     {% endif %}
 </div>
+
+<script src="{{ url_for('static', filename='js/new_cards.js') }}"></script>
 
 {% endblock %}

@@ -1,4 +1,5 @@
 # blueprints/dashboard/routes.py
+from itertools import filterfalse
 
 from flask import render_template, redirect, url_for, flash, request, jsonify
 from . import dashboard_bp
@@ -74,7 +75,12 @@ def deck(id):
         return redirect(url_for('dashboard.home'))
 
     # transform decks into a dict to pass to the template
-    deck_data = []
+    deck_data = {
+        'id': id,
+        'level': deck.get('level'),
+        'topic': deck.get('topic'),
+        'units': []
+    }
     for unit in deck.get('units', []):
         concepts = []
         for concept in unit['outline']:
@@ -82,7 +88,7 @@ def deck(id):
             for card in concept['cards']:
                 cards.append({'front': card['front'], 'back': card['back']})
             concepts.append({'concept': concept['concept'], 'cards': cards})
-        deck_data.append({
+        deck_data['units'].append({
             'id': str(unit['id']),
             'title': unit['title'],
             'concepts': concepts,
@@ -97,8 +103,51 @@ def deck(id):
         back_url=url_for('dashboard.home'),
     )
 
+@dashboard_bp.route('/deck/save_cards', methods=['POST'])
+@login_required
+def save_cards():
+    new_data = request.get_json()
+    print(new_data, flush=True)
 
-@dashboard_bp.route('/new_deck', methods=['GET', 'POST'])
+    if not new_data:
+        flash('No data received.', 'warning')
+        return jsonify({'status': 'error', 'message': 'No data provided'}), 400
+
+    new_cards = request.get_json().get('cards')
+    print(new_cards, flush=True)
+
+    # get the deck
+    deck_data = Deck.get_deck(mongo.db, new_data.get('id'))
+    if not ObjectId(deck_data.get('user_id')) == ObjectId(current_user.id):
+        flash('You do not have access to that deck.', 'warning')
+        return jsonify({'status': 'error', 'message': 'You do not have access to that deck', 'redirect_url': url_for('dashboard.home')}), 400
+
+    deck = Deck(mongo.db, deck_data)
+
+    # create the new deck
+    updated = False
+    print(deck.units, flush=True)
+    for unit in deck.units:
+        if unit['title'] == new_data.get('unit'):
+            for concept in unit['outline']:
+                if concept['concept'] == new_data.get('concept'):
+                    # update the concept's cards
+                    concept['cards'].extend(new_cards)
+                    updated = True
+                    break
+        if updated:
+            break
+
+    if not updated:
+        print("not updated", flush=True)
+        return jsonify({'status': 'error', 'message': 'Unit or concept not found'}), 404
+
+    deck.save()
+
+    flash(f'Cards added to "{deck.title}"!', 'success')
+    return jsonify({'status': 'success', 'redirect_url': url_for('dashboard.deck', id=( ObjectId(deck.id) ))}), 200
+
+@dashboard_bp.route('/new_deck', methods=['GET'])
 @login_required
 def new_deck():
     return render_template(
@@ -109,7 +158,7 @@ def new_deck():
         back_url=url_for('dashboard.home'),
     )
 
-@dashboard_bp.route('/save_deck', methods=['GET', 'POST'])
+@dashboard_bp.route('/save_deck', methods=['POST'])
 @login_required
 def save_deck():
     new_deck_data = request.get_json()
