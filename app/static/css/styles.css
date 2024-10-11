@@ -83,6 +83,12 @@ body {
 .thumbnail-title {
     font-weight: bolder;
     font-size: 18px;
+    line-height: 22px;
+}
+
+.thumbnail-flashcard-title {
+    font-size: 18px;
+    line-height: 22px;
 }
 
 .thumbnail-description {
@@ -269,13 +275,13 @@ body {
     border: 1px solid rgba(24,52,78,0.10);
     border-radius: 6px;
     box-shadow: inset 0px -1px 8px -4px rgba(24,52,78,0.33);
+    padding: 10%
 }
 
 .flashcard-face span {
     text-align: center;
-    font-size: 24px;
-    line-height: 24px;
-    margin-bottom: 20px;
+    font-size: 32px;
+    line-height: 36px;
 }
 
 .front {

@@ -44,9 +44,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const frontData = link.getAttribute('data-front');
             const backData = link.getAttribute('data-back');
 
+            // parse to markdown
+            const frontDataMd = marked.parse(frontData);
+            const backDataMd = marked.parse(backData);
+
             // change the data in the preview
-            frontElement.innerHTML = frontData;
-            backElement.innerHTML = backData;
+            frontElement.innerHTML = frontDataMd;
+            backElement.innerHTML = backDataMd;
 
             // open the preview
             modalElement.show();
