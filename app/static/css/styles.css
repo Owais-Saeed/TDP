@@ -84,11 +84,25 @@ body {
     font-weight: bolder;
     font-size: 18px;
     line-height: 22px;
+    padding: 20px;
+    height: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .thumbnail-flashcard-title {
     font-size: 18px;
     line-height: 22px;
+    padding: 20px 20px 10px 20px;
+    height: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .thumbnail-description {
