@@ -15,8 +15,8 @@ import pytz
 import requests
 
 options = [
-    { 'name': 'Profile', 'url': '#', 'icon': 'bi-person-circle' },
-    { 'name': 'Settings', 'url': '#', 'icon': 'bi-gear' },
+    # { 'name': 'Profile', 'url': '#', 'icon': 'bi-person-circle' },
+    # { 'name': 'Settings', 'url': '#', 'icon': 'bi-gear' },
     { 'name': 'Sign Out', 'url': '/auth/logout', 'icon': 'bi-box-arrow-right' },
 ]
 
