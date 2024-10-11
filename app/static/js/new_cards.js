@@ -1,4 +1,4 @@
-// static/js/new_deck.js
+// static/js/new_cards.js
 
 let deckId = null;
 

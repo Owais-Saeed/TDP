@@ -43,7 +43,6 @@ def home():
     decks_data = []
     for deck_item in decks:
         _deck = Deck(mongo.db, deck_item)
-        print(_deck, flush=True)
         decks_data.append({
             'id': str(deck_item['_id']),
             'title': deck_item['title'],
@@ -86,7 +85,7 @@ def deck(id):
         for concept in unit['outline']:
             cards = []
             for card in concept['cards']:
-                cards.append({'front': card['front'], 'back': card['back']})
+                cards.append({'front': card['front'], 'back': card['back'], 'difficulty': card['difficulty'].capitalize()})
             concepts.append({'concept': concept['concept'], 'cards': cards})
         deck_data['units'].append({
             'id': str(unit['id']),
@@ -107,14 +106,12 @@ def deck(id):
 @login_required
 def save_cards():
     new_data = request.get_json()
-    print(new_data, flush=True)
 
     if not new_data:
         flash('No data received.', 'warning')
         return jsonify({'status': 'error', 'message': 'No data provided'}), 400
 
     new_cards = request.get_json().get('cards')
-    print(new_cards, flush=True)
 
     # get the deck
     deck_data = Deck.get_deck(mongo.db, new_data.get('id'))
@@ -126,7 +123,6 @@ def save_cards():
 
     # create the new deck
     updated = False
-    print(deck.units, flush=True)
     for unit in deck.units:
         if unit['title'] == new_data.get('unit'):
             for concept in unit['outline']:
@@ -139,7 +135,6 @@ def save_cards():
             break
 
     if not updated:
-        print("not updated", flush=True)
         return jsonify({'status': 'error', 'message': 'Unit or concept not found'}), 404
 
     deck.save()
