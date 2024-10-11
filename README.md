@@ -1,50 +1,61 @@
 # Flashcard App
 
-A web-based application that generates flashcards using an AI language model.
+Our application is designed to generate educational STEM flashcards for high-school students. The application utilises proven study techniques including retrieval practice, and incremental rehearsal.
+
+![Application screenshot](./app/static/images/screenshot.png)
 
 ## Technologies used
 
-- Bootstrap (Front-End)
-- Flask (Back-End)
-- LangChain (AI-integration)
+- **Flask**: Back-end web framework.
+- **MongoDB**: NoSQL database.
+- **Bootstrap**: Front-end framework.
+- **LangChain**: LLM integration framework.
+- **Gemini**: The model used to generate content.
+- **Docker**: For containerisation.
 
-## Installation Overview
+## Getting Started
+
+### Prerequisites
+
+- Docker ([Docker Desktop](https://www.docker.com/products/docker-desktop/) is recommended)
+- Git ([GitHub Desktop](https://desktop.github.com/download/) is recommended)
+- Google Gemini API Key (Create an API key at [Google AI Studio](https://aistudio.google.com))
+
+### Installation
 
 1. Clone the repository.
 
-2. Build and run the application using Docker Compose
+2. Set up the Environment Variables.
+
+3. Build and run the application using Docker Compose.
 
 ```sh
 docker-compose up --build
 ```
 
-3. Access the application using the assigned port.
+### Environment Variables
 
-## Installation Step-by-step
+To use the application's AI features, a Gemini API key is _required_. Place your API keys in a `.env` file in the root directory (`/.env`).
 
-1. **Clone the repository**
+#### Google Gemini API (required)
 
-    1. [Download GitHub Desktop](https://desktop.github.com/download/).
-    2. Install and Sign-in to GitHub Desktop
-    3. Navigate to Current Repository > Add > Clone Repository.
-    4. Clone this repository to a location on your computer. The default path is `~/Documents/GitHub/` .
-    5. Click "Fetch origin" to sync your computer with the latest updates from the repository.
+1. Create a [Google AI Studio](https://aistudio.google.com) API key.
 
-2. **Install Docker**
+2. Add your Gemini API key to the `.env` file:
 
-    1. [Download Docker Desktop](https://www.docker.com/products/docker-desktop/)
-    2. Install Docker Desktop. You can skip the prompts to sign-in or create an account, we don't need to use those features.
+```
+export GOOGLE_API_KEY="your_api_key_here"
+```
 
-3. **Set up the Docker Container** (I'm assuming PowerShell works 1:1 to the Mac/Linux terminal)
+#### LangSmith (optional)
 
-    1. Open terminal (or PowerShell on Windows).
-    2. Navigate to your local repository. (if you cloned the repository to the default path you will use `cd ~/Documents/GitHub/TDP/`).
-    3. Use the command `docker-compose up --build`.
-    4. Docker will automatically install all the dependencies and launch the application on your computer.
+Use LangSmith to see a detailed breakdown of the LLM's generation process.
 
-4. **Launch the application**
+1. Create a [LangSmith](https://www.langchain.com/langsmith) API key.
 
-    1. Open Docker Desktop.
-    2. If the container is not already running, click the play button next to the container.
-    3. Click the open port next to "cardapp-web". If you can't see this, you might need to expand the drop-down under "TDP".
-    4. The application should open in your default browser!
+2. Add your LangSmith API key to the `.env` file:
+
+```
+export LANGCHAIN_TRACING_V2="true"
+export LANGCHAIN_API_KEY="your_api_key_here"
+```

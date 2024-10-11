@@ -1,0 +1,41 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+{% block title %} | Dashboard{% endblock %}
+
+{% import 'partials/thumbnail_deck.html' as thumbnail_card_template %}
+
+{% block content %}
+
+<div class="container-fluid p-0">
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4">
+
+        <!-- new set button -->
+        <div class="col">
+            <div class="thumbnail">
+                <a href="{{ url_for('dashboard.new_deck') }}" class="thumbnail-card thumbnail-new">
+                    <i class="bi bi-plus-circle"></i>
+                    <span class="thumbnail-title" style="height: fit-content;">
+                        New Deck
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <!-- existing sets -->
+        {% if data %}
+            {% for thumbnail_data in data %}
+                <div class="col">
+                    {{ thumbnail_card_template.thumbnail_card(
+                        id=thumbnail_data.id,
+                        title=thumbnail_data.title,
+                        count=thumbnail_data.card_count
+                    ) }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock %}

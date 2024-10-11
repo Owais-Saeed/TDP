@@ -1,0 +1,12 @@
+<!-- partials/directory_header.html -->
+
+{% macro directory_header(title, back_url) %}
+<h1 class="display-6 fw-bold text-body-emphasis text-left mb-5 directory-header">
+  {% if back_url %}
+    <a class="btn btn-link text-body text-decoration-none px-0" href="{{ back_url }}">
+      <i class="bi bi-chevron-left me-2"></i>
+    </a>
+  {% endif %}
+  <span>{{ title }}</span>
+</h1>
+{% endmacro %}

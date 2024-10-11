@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block page %}
+
+<div class="px-4 pt-5 my-5 text-center border-bottom">
+  <h1 class="display-4 fw-bold text-body-emphasis">CardApp</h1>
+  <div class="col-lg-6 mx-auto">
+    <p class="lead mb-4">Generate educational STEM flashcards.</p>
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+      <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg px-4 me-sm-3">Sign-up</a>
+      <a href="{{ url_for('auth.login') }}" class="btn btn-outline-secondary btn-lg px-4">Sign-in</a>
+    </div>
+  </div>
+  <div class="overflow-hidden" style="max-height: 30vh;">
+    <div class="container px-5">
+      <img src="{{ url_for('static', filename='images/screenshot.png') }}" class="img-fluid" alt="CardApp Screenshot" width="700" height="500" loading="lazy">
+    </div>
+  </div>
+</div>
+
+{% endblock %}

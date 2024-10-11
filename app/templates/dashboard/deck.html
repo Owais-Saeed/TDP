@@ -1,0 +1,70 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+{% block title %} | {% if course.topic %}{{ course.topic }}{% else %}Empty Deck{% endif %}{% endblock %}
+
+{% import 'partials/thumbnail_card.html' as thumbnail_card_template %}
+
+{% set ns = namespace(card_count = 0) %}
+
+{% block content %}
+
+<div class="container-fluid p-0 deck-course" {% if course %} data-cards-level="{{ course.level }}" data-cards-topic="{{ course.topic }}" {% endif %}>
+    <!-- existing sets -->
+    {% if course and course.units %}
+        <span id="deck-id" class="visually-hidden">{{ course.id }}</span>
+        {% for unit in course.units %}
+            <hr>
+            <div class="unit pb-5 deck-unit" data-cards-unit="{{ unit.title }}">
+                <h2 class="mb-5"><span class="text-secondary me-2" style="font-weight: normal;">Unit {{ unit.id }}</span> {{ unit.title }}</h2>
+                {% if unit.concepts %}
+                    {% for concept in unit.concepts %}
+                        <div class="deck-concept" data-cards-concept="{{ concept.concept }}">
+                            <h3 class="mt-4" style="font-weight: normal;">{{ concept.concept }}</h3>
+                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4 mt-1">
+                                {% if concept.cards %}
+                                    {% for card in concept.cards %}
+                                        {% set ns.card_count = ns.card_count + 1 %}
+                                        <div class="col">
+                                            {{ thumbnail_card_template.thumbnail_card(
+                                                id=ns.card_count,
+                                                front=card.front,
+                                                back=card.back,
+                                                difficulty=card.difficulty
+                                            ) }}
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <p><button type="button" class="btn btn-outline-primary cards-generate-button">Generate Cards</button></p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>There are no concepts.</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>There is no content.</p>
+    {% endif %}
+</div>
+
+<div class="modal fade" id="card-preview" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: none;">
+        <div class="modal-content flashcard-container" style="background: none; border: none;">
+            <div class="flashcard">
+                <div class="flashcard-face front">
+                    <span id="preview-front"></span>
+                </div>
+                <div class="flashcard-face back">
+                    <span id="preview-back"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/new_cards.js') }}"></script>
+<script src="{{ url_for('static', filename='js/card_preview.js') }}"></script>
+
+{% endblock %}

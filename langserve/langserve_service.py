@@ -2,6 +2,7 @@
 
 # LangServe
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from langserve import add_routes
 # Generators
 from outline_generator import chain as outline_chain
@@ -11,6 +12,14 @@ app = FastAPI(
     title="CardApp",
     version="1.0",
     description="API server for CardApp's LangChain integration.",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:8000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
 )
 
 

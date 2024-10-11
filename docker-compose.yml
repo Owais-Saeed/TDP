@@ -1,21 +1,22 @@
 services:
   flask-app:
-    build: .
+    build: ./app
     container_name: flask-app
     restart: unless-stopped
     ports:
       - "8000:5000"
     volumes:
-      - .:/app
+      - ./app:/app
     depends_on:
       - langserve
       - mongodb
     env_file:
       - .env
     environment:
-      FLASK_ENV: development
-      FLASK_APP: app.py
-      MONGO_URI: mongodb://mongodb:27017/mydatabase
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
+      - FLASK_APP=app.py
+      - MONGO_URI=mongodb://mongodb:27017/mydatabase
     command: flask run --host=0.0.0.0
 
   langserve:
