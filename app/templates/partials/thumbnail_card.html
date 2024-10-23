@@ -4,9 +4,9 @@
 {% macro thumbnail_card(id, front, back, difficulty) %}
   <div class="thumbnail thumbnail-link" id="card-{{ id }}" data-front="{{ front }}" data-back="{{ back }}">
     <div class="thumbnail-card thumbnail-flashcard">
-      <span class="thumbnail-flashcard-title md">
+      <div class="thumbnail-flashcard-title md">
         {{ front }}
-      </span>
+      </div>
     </div>
     {% if difficulty %}
       <div class="thumbnail-description">{{ difficulty }}</div>
