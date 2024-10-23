@@ -1,13 +1,13 @@
 # Flask dependencies
 Flask~=3.0.3
-requests
-python-dotenv
+requests~=2.32.3
+python-dotenv~=1.0.1
 
 # flask extensions
-flask_pymongo
-flask_migrate
-flask_login
-Flask-WTF
+flask_pymongo~=2.3.0
+flask_migrate~=4.0.7
+flask_login~=0.6.3
+Flask-WTF~=1.2.1
 email-validator
 # python timezone
 pytz
