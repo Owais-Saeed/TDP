@@ -95,7 +95,7 @@ body {
 
 .thumbnail-flashcard-title {
     font-size: 18px;
-    line-height: 22px;
+    line-height: 120%;
     padding: 20px 20px 10px 20px;
     height: 100%;
     overflow: hidden;
@@ -161,6 +161,8 @@ body {
     background-size: cover;
     transition: transform var(--transition-fast);
     mask-image: url('../images/deck-mask.svg');
+    mask-repeat: no-repeat;
+    mask-size: cover;
     border-radius: 1px;
     border: var(--card-border);
     box-shadow: var(--card-shadow);
@@ -292,10 +294,10 @@ body {
     padding: 10%
 }
 
-.flashcard-face span {
+.flashcard-face .content {
     text-align: center;
     font-size: 32px;
-    line-height: 36px;
+    line-height: 120%;
 }
 
 .front {
